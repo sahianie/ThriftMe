@@ -19,7 +19,7 @@
 
 	@include('Front.Partial.Footer')
 	
-    include('Front.Partial.Script')
+    @include('Front.Partial.Script')
 
     </body>
 </html>
