@@ -70,7 +70,7 @@
                             {{ session('error') }}
                         </div>
                     @endif
-                    <form action="" method="post">
+                    <form action="{{ route('user.store') }}" method="post">
                         @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label"> <b> Enter Name</b></label>
@@ -116,7 +116,7 @@
                     </form>
                     <div class="row">
                         <div class=" col-sm-12 text-center">
-                            <p class="mb-0"> Already have an account? <a href=""> <b>Login</b></a></p>
+                            <p class="mb-0"> Already have an account? <a href="{{ route('login') }}"> <b>Login</b></a></p>
                         </div>
                     </div>
                 </div>
