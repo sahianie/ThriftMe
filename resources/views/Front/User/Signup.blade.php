@@ -1,5 +1,4 @@
-@extends('Front.Master.master')
-@section('content')
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,8 +6,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Signup Page</title>
-    @include('Front.Partial.Style')
+    <title>Register Page</title>
+    @include('Front/Partial.Style')
 
     <style>
         .container {
@@ -42,19 +41,6 @@
 </head>
 
 <body>
-
-<!-- Page Info -->
-<div class="page-info-section page-info">
-		<div class="container">
-			<div class="site-breadcrumb">
-				<a href="">Home</a> /
-				<span>Register Page</span>
-			</div>
-			<img src="Front/img/page-info-art.png" alt="" class="page-info-art">
-		</div>
-	</div>
-	<!-- Page Info end -->
-
     <div class="container">
         <div class="card">
             <div class="card-header">
@@ -70,7 +56,7 @@
                             {{ session('error') }}
                         </div>
                     @endif
-                    <form action="{{ route('user.store') }}" method="post">
+                    <form action="{{route('user.store')}}" method="post">
                         @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label"> <b> Enter Name</b></label>
@@ -116,7 +102,7 @@
                     </form>
                     <div class="row">
                         <div class=" col-sm-12 text-center">
-                            <p class="mb-0"> Already have an account? <a href="{{ route('login') }}"> <b>Login</b></a></p>
+                            <p class="mb-0"> Already have an account? <a href="{{route('login')}}"> <b>Login</b></a></p>
                         </div>
                     </div>
                 </div>
@@ -127,4 +113,3 @@
 </body>
 
 </html>
-@endsection

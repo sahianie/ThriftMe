@@ -17,11 +17,14 @@
     <!-- Product section -->
 <section class="product-section spad">
 		<div class="container">
-			<ul class="product-filter controls">
-				<li class="control" data-filter=".new">New arrivals</li>
-				<li class="control" data-filter="all">Recommended</li>
-				<li class="control" data-filter=".best">Best sellers</li>
-			</ul>
+		<ul class="product-filter controls">
+		@foreach($categories as $category)
+       
+            <!-- <h3>{{ $category->category_name }}</h3> -->
+			<li class="control" >{{ $category->category_name }}</li>
+    @endforeach
+</ul>
+
 			<div class="row" id="product-filter">
 				<div class="mix col-lg-3 col-md-6 best">
 					<div class="product-item">

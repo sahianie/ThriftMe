@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
-    public function index()
+    public function loginpage()
     {
         return view('Front.User.Login');
     }
@@ -24,7 +24,7 @@ class LoginController extends Controller
         $request->validate(
             [
                 "name"=> 'required|string|max:255|regex:/^[a-zA-Z]+$/u',
-                'email' => 'required|string|max:255|email|regex:/^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/',
+                'email' => 'required|string|unique:users|max:255|email|regex:/^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/',
                 'password' => 'required|min:8|confirmed|string|regex:/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()\-_=+{};:,<.>])/u',
                 'password_confirmation' =>'required|string|min:8|regex:/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()\-_=+{};:,<.>])/u'
                 ]
@@ -41,7 +41,7 @@ class LoginController extends Controller
         }
         else
         {
-            return redirect()->route('home.main');
+            return view('Front.User.Login'); 
         }
     }
 
@@ -59,12 +59,12 @@ class LoginController extends Controller
                 if ( Auth::user()->role=='admin')
                 {
 
-                        return redirect()->route('index');
+                        return redirect()->route('admin.dashboard');
                 }
 
               else
                 {
-                    return redirect()->route('signup');
+                    return redirect()->route('home');
                 }
 
             }

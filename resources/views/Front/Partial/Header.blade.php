@@ -18,8 +18,15 @@
 				<li><a href="{{ route('buy') }}">Buy</a></li>
 				<li><a href="#">Favourite</a></li>
 				<li><a href="contact.html">Contact</a></li>
-				<li><a href="{{ route('login') }}">Login</a></li>
-				<li><a href="{{ route('signup') }}">Signup</a></li>
+
+				@if (Auth::check())
+    <!-- Agar user login hai to Logout button dikhaye -->
+    <a href="{{ route('logout') }}" class="btn" style="color: white">LOGOUT</a>
+
+@else
+    <!-- Agar user logout hai to Login button dikhaye -->
+    <a href="{{ route('login') }}" class="btn"style="color:white" >LOGIN</a>
+@endif
 			</ul>
 		</div>
 	</header>

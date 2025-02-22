@@ -6,6 +6,11 @@
 	<meta name="description" content="ThriftMe">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	@include('Front.Partial.Style')
+
+<style>
+	
+</style>
+
 </head>
 <body>
 	<!-- Page Preloder
