@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\BuyController;
 use App\Http\Controllers\Front\RentalController;
+use App\Http\Controllers\Admin\RentalPostController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Front\LoginController;
 
@@ -37,6 +38,12 @@ Route::post('/storeCategory',[CategoryController::class,'store'])->name('store.c
 Route::get('/editCategory/{id}',[CategoryController::class,'edit'])->name('edit.category');
 Route::post('/updateCategory/{id}',[CategoryController::class,'update'])->name('update.category');
 Route::any('/deleteCategory/{id}',[CategoryController::class,'destroy'])->name('delete.category');
+
+///////////////////  Rental Routes  ///////////////
+
+Route::get('/createRental',[RentalPostController::class,'create'])->name('create.rental');
+Route::get('/indexRental',[RentalPostController::class,'index'])->name('index.rental');
+Route::post('/storeRental',[RentalPostController::class,'store'])->name('store.rental');
 
 });
 

@@ -24,60 +24,60 @@
         }
         .navbar-brand
         {
-            color:#191645 ;
+            color:black ;
 
         }
         .navbar-brand:hover
         {
-            color: #191645;
+            color: black;
 
         }
         .fa-bars
         {
-           color: #191645;
+           color: black;
         }
 
         .sidecontent
         {
-            color: #191645;
+            color: black;
         }
         .sidecontent:hover
         {
-            color: #191645;
+            color:black;
         }
         .profile
         {
-            color: #191645;
+            color: #af99ff;
         }
         .profile:hover
         {
-            background-color: #43CBAC;
-            color:#191645;
+            background-color: #ff99b6;
+            color: #af99ff;
         }
         .categoryBtn
         {
-            background-color: #43CBAC;
-            color:#191645 ;
+            background-color:#ff99b6;
+            color: #af99ff;
             border-radius: 5px;
         }
         .categoryBtn:hover
         {
-            background-color: #43CBAC;
-            color:#191645 ;
+            background-color:#ff99b6;
+            color: black;
         }
         .submitCategory
         {
-            background-color: #191645;
-            color: #43CBAC;
+            background-color: #af99ff;
+            color:black;
         }
         .submitCategory:hover
         {
-            background-color: #191645;
-            color: #43CBAC;
+            background-color: #af99ff;
+            color: black;
         }
         .categoryCard
         {
-            background-color: #43CBAC;
+            background-color: #ff99b6;
             width: 70%;
 
         }
@@ -98,7 +98,7 @@
         }
         .productCard
         {
-            background-color: #43CBAC;
+            background-color: #ff99b6;
             width: 70%;
             margin-bottom: 50px;
             margin-top: 50px;
