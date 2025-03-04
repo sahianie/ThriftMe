@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('condition')->nullable();
             $table->enum('type', ['men', 'women', 'kid'])->nullable();
             $table->decimal('rent_per_day',6,2)->nullable();
+            $table->enum('status', ['Available', 'Booked'])->default('Available');
             $table->text('image')->nullable();
             $table->timestamps();
         });

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use App\Models\Book;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,10 +18,15 @@ class Rental extends Model
         'condition',
         'type',
         'rent_per_day',
+        'status',
         'image',
     ];
     public function category()
    {
     return  $this->belongsTo(Category::class);
    }
+   public function book()
+    {
+        return $this->hasMany(Book::class);
+    }
 }

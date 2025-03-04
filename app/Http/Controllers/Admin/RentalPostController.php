@@ -81,7 +81,10 @@ class RentalPostController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data = Rental::findorfail($id);
+         // dd($data);
+         $categories = Category::all(); 
+         return view('Admin.Rental.edit', compact(['data','categories']));
     }
 
     /**
@@ -97,6 +100,22 @@ class RentalPostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try
+    {
+        $rental = Rental::findOrFail($id);
+
+        if ($rental)
+        {
+
+        $rental->delete();
+
+
+        return redirect()->route('index.rental')->with("success","Rental Post deleted successfully'");
+        }
+    }
+    catch (\Exception $e)
+    {
+        return redirect()->route('index.rental')->with(['error' => 'Failed to delete Rental Post: '. $e->getMessage()], 500);
+    }
     }
 }

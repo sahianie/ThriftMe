@@ -18,6 +18,13 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/buy', [BuyController::class, 'index'])->name('buy');
 Route::get('/rental', [RentalController::class, 'index'])->name('rental');
 
+
+///////////////////  ViewRentalPosts Routes  ///////////////
+
+Route::get('/rentals/{category_id}', [RentalController::class, 'Filterbycategory'])->name('rentals.bycategory');
+Route::get('/rentalDetail/{rental_id}', [RentalController::class, 'Rentaldetail'])->name('rental.detail');
+Route::get('/rentalOrder', [RentalController::class, 'Rentalorder'])->name('rental.order');
+
 /////////////////// Authentication  ///////////////
 
 Route::get('/login', [LoginController::class, 'loginpage'])->name('login');
@@ -44,6 +51,9 @@ Route::any('/deleteCategory/{id}',[CategoryController::class,'destroy'])->name('
 Route::get('/createRental',[RentalPostController::class,'create'])->name('create.rental');
 Route::get('/indexRental',[RentalPostController::class,'index'])->name('index.rental');
 Route::post('/storeRental',[RentalPostController::class,'store'])->name('store.rental');
+Route::get('/editRental/{id}',[RentalPostController::class,'edit'])->name('edit.rental');
+Route::post('/updateRental/{id}',[RentalPostController::class,'update'])->name('update.rental');
+Route::any('/deleteRental/{id}',[RentalPostController::class,'destroy'])->name('delete.rental');
 
 });
 

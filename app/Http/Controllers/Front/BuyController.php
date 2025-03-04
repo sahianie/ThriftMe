@@ -11,6 +11,6 @@ class BuyController extends Controller
     public function index()
     {
         $categories = Category::where('category_type', 'thrifted')->get();
-        return view('Front.Content.Buy', compact('categories'));
+        return view('Front.Content.Thrifted.Buy', compact('categories'));
     }
 }

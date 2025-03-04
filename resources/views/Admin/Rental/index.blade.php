@@ -34,7 +34,6 @@
                                                     <th>Category</th>
                                                     <th>Type</th>
                                                     <th>Size</th>
-                                                    <th>Material</th>
                                                     <th>Condition</th>
                                                     <th>Price</th>
                                                     <th>Image</th>
@@ -48,7 +47,6 @@
             <td>{{ $rent->category->category_name }}</td>
             <td>{{ $rent->type }}</td>
             <td>{{ $rent->size }}</td>
-            <td>{{ $rent->material }}</td>
             <td>{{ $rent->condition }}</td>
             <td>{{ $rent->rent_per_day }}</td>
             <td>
@@ -59,11 +57,17 @@
 </td>
 
             <td>
-                <a href="" class="btn btn-primary">Edit</a>
-                <form action="" method="POST" style="display:inline;">
+            <a href="{{ route('edit.rental', $rent->id) }}" class="btn btn-sm btn-primary">
+    <i class="fas fa-edit"></i>
+</a>
+
+                <form action="{{ route('delete.rental', $rent->id) }}" method="POST" style="display:inline;">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">
+    <i class="fas fa-trash"></i>
+</button>
+
                 </form>
             </td>
         </tr>

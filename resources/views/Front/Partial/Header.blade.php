@@ -4,7 +4,8 @@
 		<div class="container-fluid">
 			<!-- logo -->
 			<div class="site-logo">
-				<img src="Front/img/logo.png" alt="logo">
+			<img src="{{ asset('Front/img/logo.png') }}" alt="Logo">
+
 			</div>
 			<!-- responsive -->
 			<div class="nav-switch">
