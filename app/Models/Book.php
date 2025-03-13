@@ -12,13 +12,15 @@ class Book extends Model
     use HasFactory;
     protected $fillable =
     [
-        'Username',
-        'Address',
-        'startDate',
-        'endDate',
-        'totalDays',
-        'totalAmount',
-        'Contact'
+        'user_id',
+        'rental_id',
+        'username',
+        'address',
+        'start_date',
+        'end_date',
+        'total_days',
+        'total_amount',
+        'contact'
 
     ];
     public function user()

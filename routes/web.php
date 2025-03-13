@@ -23,7 +23,8 @@ Route::get('/rental', [RentalController::class, 'index'])->name('rental');
 
 Route::get('/rentals/{category_id}', [RentalController::class, 'Filterbycategory'])->name('rentals.bycategory');
 Route::get('/rentalDetail/{rental_id}', [RentalController::class, 'Rentaldetail'])->name('rental.detail');
-Route::get('/rentalOrder', [RentalController::class, 'Rentalorder'])->name('rental.order');
+Route::get('/rentalOrder/{rental_id}', [RentalController::class, 'Rentalorder'])->name('rental.order');
+Route::post('/rentalOrderstore', [RentalController::class, 'storeRentalOrder'])->name('rental.order.store');
 
 /////////////////// Authentication  ///////////////
 

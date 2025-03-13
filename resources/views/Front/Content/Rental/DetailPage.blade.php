@@ -31,7 +31,7 @@
                     </ul>
                     <br>
                     <br>
-                    <a href="{{ route('rental.order')}}" class="site-btn btn-line">Book</a>
+                    <a href="{{ route('rental.order', $rental->id) }}" class="site-btn btn-line">Book</a>
                 </div>
             </div>
         </div>
