@@ -44,7 +44,7 @@
 						<div class="product-info">
 							<h6>Long red Shirt</h6>
 							<p>$39.90</p>
-							<a href="#" class="site-btn btn-line">ADD TO CART</a>
+							<a href="#" class="site-btn btn-line">DETAIL</a>
 						</div>
 					</div>
 				</div>

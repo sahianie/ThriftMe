@@ -3,7 +3,7 @@
 <head>
     <title>New Rental Order Placed</title>
 </head>
-<body>
+<body style="font-family: Arial, sans-serif; padding: 20px;">
     <h1>New Rental Order</h1>
     <p>A new rental has been placed with the following details:</p>
     <ul>

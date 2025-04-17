@@ -17,6 +17,11 @@
                     <div class="sb-nav-link-icon sidecontent"><i class="fas fa-tachometer-alt"></i></div>
                     <b class="sidecontent"> Rental </b>
                 </a>
+
+                <a class="nav-link " href="{{ route('index.thrift') }}">
+                    <div class="sb-nav-link-icon sidecontent"><i class="fas fa-tachometer-alt"></i></div>
+                    <b class="sidecontent"> Thrift </b>
+                </a>
                 
             </div>
         </div>

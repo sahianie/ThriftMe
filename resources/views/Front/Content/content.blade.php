@@ -41,7 +41,7 @@
             <li>
                 <div class="intro-item">
                     <figure>
-                        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->title }}">
+                        <img style="height:300px; width: 300px;" src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->title }}">
                     </figure>
                     <div class="product-info">
                         <h5>{{ $product->title }}</h5>

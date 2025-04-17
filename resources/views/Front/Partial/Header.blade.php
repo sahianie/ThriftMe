@@ -16,7 +16,7 @@
 			<ul class="main-menu">
 				<li><a href="{{ route('home') }}">Home</a></li>
 				<li><a href="{{ route('rental') }}">Rental</a></li>
-				<li><a href="{{ route('buy') }}">Thrift</a></li>
+				<li><a href="{{ route('thrift') }}">Thrift</a></li>
 				<li><a href="#">Favourite</a></li>
 				<li><a href="contact.html">Contact</a></li>
 

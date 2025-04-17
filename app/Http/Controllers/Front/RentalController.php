@@ -59,7 +59,7 @@ class RentalController extends Controller
 
 public function storeRentalOrder(Request $request)
 {
-    // Validate the incoming request
+    // 📋 Step 1: Validate the incoming request
     $validatedData = $request->validate([
         'username'   => 'required|string|max:255',
         'address'    => 'required|string|max:500',
@@ -69,42 +69,36 @@ public function storeRentalOrder(Request $request)
         'contact'    => 'required|string|max:20',
     ]);
 
-    // Fetch the rental (you can fetch by any other logic if needed)
-    // For now, let's assume rental is being fetched by its ID or logic to find it
-    $rental = Rental::find($request->rental_id); // Make sure this rental_id is passed in the form
-
-    // Ensure the rental exists
+    // 🏠 Step 2: Fetch the rental
+    $rental = Rental::find($request->rental_id);
     if (!$rental) {
         return redirect()->back()->with('error', 'Rental item not found.');
     }
 
-    // Calculate the total amount based on rental price and total days
+    // 💰 Step 3: Calculate total amount
     $total_amount = $validatedData['total_days'] * $rental->rent_per_day;
 
-    // Store the booking in the database
+    // 🗂️ Step 4: Store booking and send mail
     try {
-        // Creating a new booking entry
         Book::create([
-            'user_id'      => auth()->id(), // Get the authenticated user ID
-            'rental_id'    => $rental->id,   // Use the rental's ID
+            'user_id'      => auth()->id(),
+            'rental_id'    => $rental->id,
             'username'     => $validatedData['username'],
             'address'      => $validatedData['address'],
             'start_date'   => $validatedData['start_date'],
             'end_date'     => $validatedData['end_date'],
             'total_days'   => $validatedData['total_days'],
-            'total_amount' => $total_amount, // Calculated amount
+            'total_amount' => $total_amount,
             'contact'      => $validatedData['contact'],
         ]);
- // **📩 Admin Ko Email Send Karein**
- Mail::to($request->user()->email)->send(new AdminNotification($rental));
 
- return redirect()->back()->with('success', 'Your rental order has been placed successfully!');
-        // Redirect with success message
+        // 📩 Step 5: Send email to admin
+        $adminEmail = config('mail.admin_email'); // ✅ Recommended way
+        Mail::to($adminEmail)->send(new AdminNotification($rental));
+
         return redirect()->back()->with('success', 'Your rental order has been placed successfully!');
     } catch (\Exception $e) {
-        // Catch any errors and show an error message
         return redirect()->back()->with('error', 'Something went wrong: ' . $e->getMessage());
     }
 }
-
 }

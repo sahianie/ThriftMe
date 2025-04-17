@@ -22,7 +22,7 @@
    {!! Form::label('categoryType', 'Category Type',['class' => 'form-label',]) !!}
 </b>
 &nbsp;
-<b> <small>** Clothes , Shoes ,Bags **</small></b>
+<b> <small>** Rental, Thrifted **</small></b>
     {!! Form::text('category_type', !empty($data->category_type) ? $data->category_type : null, [
         'class' => 'form-control',
         'id' => 'categoryType',
