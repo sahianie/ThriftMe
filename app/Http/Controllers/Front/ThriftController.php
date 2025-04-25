@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Front;
 
 use App\Models\Category;
 use App\Models\Thrift;
-use App\Models\Book;
+use App\Models\Sold;
+use App\Models\User;
+use App\Notifications\NewSoldNotification;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -12,7 +14,7 @@ class ThriftController extends Controller
 {
     public function index()
     {
-        $categories = Category::where('category_type', 'thrift')->get();
+        $categories = Category::where('category_type', 'thrifted')->get();
         $products = Thrift::all();
         return view('Front.Content.Thrifted.ThriftPost', compact('categories', 'products'));
     }
@@ -21,7 +23,7 @@ class ThriftController extends Controller
     {
         $categories = Category::where('category_type', 'thrift')->get();
         $products = Thrift::where('category_id', $category_id)->get();
-        return view('Front.Content.Thrift.ThriftByCategory', compact('categories', 'products'));
+        return view('Front.Content.Thrifted.ThriftByCategory', compact('categories', 'products'));
     }
 
     public function ThriftDetail($thrift_id)
@@ -32,7 +34,7 @@ class ThriftController extends Controller
             return redirect()->back()->with('error', 'Thrift item not found.');
         }
 
-        return view('Front.Content.Thrift.DetailPage', compact('thrift'));
+        return view('Front.Content.Thrifted.DetailPage', compact('thrift'));
     }
 
     public function ThriftOrder($thrift_id)
@@ -47,7 +49,7 @@ class ThriftController extends Controller
             return redirect()->back()->with('error', 'Thrift item not found.');
         }
 
-        return view('Front.Content.Thrift.ThriftOrder', compact('thrift'));
+        return view('Front.Content.Thrifted.ThriftOrder', compact('thrift'));
     }
 
     public function storeThriftOrder(Request $request)
@@ -65,15 +67,23 @@ class ThriftController extends Controller
             return redirect()->back()->with('error', 'Thrift item not found.');
         }
 
-        // 💾 Store booking
-        Book::create([
-            'user_id'   => auth()->id(),
-            'thrift_id' => $thrift->id,
-            'username'  => $validatedData['username'],
-            'address'   => $validatedData['address'],
-            'contact'   => $validatedData['contact'],
-        ]);
+         // 💾 Step 3: Save sold record
+    $sold = Sold::create([
+        'user_id'      => auth()->id(),
+        'thrift_id'    => $thrift->id,
+        'username'     => $validatedData['username'],
+        'address'      => $validatedData['address'],
+        'contact'      => $validatedData['contact'],
+        'total_amount' => $thrift->price ?? 0, // Ya kisi aur amount logic se
+    ]);
 
-        return redirect()->route('thrift.index')->with('success', 'Your order has been placed successfully.');
+    // 🔔 Step 4: Notify admin
+    $admins = User::where('role', 'admin')->get();
+    foreach ($admins as $admin) {
+        $admin->notify(new NewSoldNotification($sold));
     }
+
+    // ✅ Step 5: Return with success
+    return redirect()->back()->with('success', 'Thrift order placed successfully!');
+}
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 use App\Models\Book;
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -29,4 +30,9 @@ class Rental extends Model
     {
         return $this->hasMany(Book::class);
     }
+    public function favouritedBy()
+{
+    return $this->morphToMany(User::class, 'favouritable', 'favourites')->withTimestamps();
+}
+
 }

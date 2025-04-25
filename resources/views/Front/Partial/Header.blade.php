@@ -17,7 +17,7 @@
 				<li><a href="{{ route('home') }}">Home</a></li>
 				<li><a href="{{ route('rental') }}">Rental</a></li>
 				<li><a href="{{ route('thrift') }}">Thrift</a></li>
-				<li><a href="#">Favourite</a></li>
+				<li><a href="{{ route('favourites.index') }}">Favourite</a></li>
 				<li><a href="contact.html">Contact</a></li>
 
 				@if (Auth::check())

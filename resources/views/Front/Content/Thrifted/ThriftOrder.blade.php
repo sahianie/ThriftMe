@@ -3,7 +3,7 @@
 @section('content')
 <div class="page-area cart-page spad">
 	<div class="container">
-		<form action="{{route('sold.order.store')}}" method="POST" class="checkout-form">
+		<form action="{{route('thrift.order.store')}}" method="POST" class="checkout-form">
 		@csrf
 			<div class="row">
 				<div class="col-lg-6">
@@ -58,7 +58,7 @@
 							</div>
 						</div>
 
-						<button type="submit" class="site-btn btn-full">Booked</button>
+						<button type="submit" class="site-btn btn-full">Sold</button>
 					</div>
 				</div>
 			</div>

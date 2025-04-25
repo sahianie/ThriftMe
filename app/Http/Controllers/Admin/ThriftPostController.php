@@ -11,25 +11,25 @@ class ThriftPostController extends Controller
 {
     public function index()
     {
-        $thrift = Thrift::all();
+        $thrift = Thrift::with('category')->get();
         return view('Admin.Thrift.index', compact('thrift'));
     }
 
     public function create()
     {
-        $categories = Category::where('category_type', 'thrift')->get();
+        $categories = Category::where('category_type', 'thrifted')->get();
         return view('Admin.Thrift.create', compact('categories'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'category_id' => 'nullable|exists:categories,id',
+            'category_id' => 'required|exists:categories,id',
             'title' => 'required|string|max:255',
-            'size' => 'nullable|in:small,medium,large',
-            'material' => 'nullable|string|max:255',
-            'condition' => 'nullable|string|max:255',
-            'type' => 'nullable|in:men,women,kid',
+            'size' => 'required|in:small,medium,large',
+            'material' => 'required|string|max:255',
+            'condition' => 'required|string|max:255',
+            'type' => 'required|in:men,women,kid',
             'price' => 'required|numeric|min:0',
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -66,10 +66,48 @@ class ThriftPostController extends Controller
         return view('Admin.Thrift.edit', compact(['data', 'categories']));
     }
 
-    public function update(Request $request, string $id)
-    {
-        //
+    public function update(Request $request, $id)
+{
+    
+    $validated= $request->validate([
+        'category_id' => 'required|exists:categories,id',
+        'title' => 'required|string|max:255',
+        'size' => 'required|in:small,medium,large',
+        'material' => 'required|string|max:255',
+        'condition' => 'required|string|max:255',
+        'type' => 'required|in:men,women,kid',
+        'price' => 'required|numeric|min:0',
+        'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
+    dd($validated);
+    $thrift = Thrift::findOrFail($id);
+
+    // Check if image is uploaded
+    if ($request->hasFile('image')) {
+        // Optional: delete old image from storage if you want
+        if ($thrift->image) {
+            Storage::disk('public')->delete($thrift->image);
+        }
+
+        $imagePath = $request->file('image')->store('thrifts', 'public');
+    } else {
+        $imagePath = $thrift->image; // keep old image
     }
+
+    $thrift->update([
+        'category_id' => $request->category_id,
+        'title' => $request->title,
+        'size' => $request->size,
+        'material' => $request->material,
+        'condition' => $request->condition,
+        'type' => $request->type,
+        'price' => $request->price,
+        'image' => $imagePath,
+    ]);
+
+    return redirect()->route('index.thrift')->with('success', 'Thrift Post Updated Successfully');
+}
+
 
     public function destroy(string $id)
     {

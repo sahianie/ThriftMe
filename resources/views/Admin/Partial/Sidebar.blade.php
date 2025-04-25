@@ -22,7 +22,17 @@
                     <div class="sb-nav-link-icon sidecontent"><i class="fas fa-tachometer-alt"></i></div>
                     <b class="sidecontent"> Thrift </b>
                 </a>
+
+                <a class="nav-link " href="{{ route('rental.orders') }}">
+                    <div class="sb-nav-link-icon sidecontent"><i class="fas fa-tachometer-alt"></i></div>
+                    <b class="sidecontent"> Booking </b>
+                </a>
                 
+                <a class="nav-link " href="{{ route('thrift.orders') }}">
+                    <div class="sb-nav-link-icon sidecontent"><i class="fas fa-tachometer-alt"></i></div>
+                    <b class="sidecontent"> Selling </b>
+                </a>
+
             </div>
         </div>
     </nav>

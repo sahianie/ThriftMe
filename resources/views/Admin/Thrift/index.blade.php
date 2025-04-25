@@ -45,7 +45,8 @@
                                                 @foreach($thrift as $item)
                                                     <tr>
                                                         <td>{{ $item->title }}</td>
-                                                        <td>{{ $item->category->category_name }}</td>
+                                                        <td>{{ optional($item->category)->category_name ?? 'No Category' }}</td>
+
                                                         <td>{{ $item->type }}</td>
                                                         <td>{{ $item->size }}</td>
                                                         <td>{{ $item->condition }}</td>

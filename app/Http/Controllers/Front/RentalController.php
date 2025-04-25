@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Front;
 use App\Models\Category;
 use App\Models\User;
 use App\Models\Book;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\AdminNotification;
+use App\Notifications\NewOrderNotification;
 use App\Models\Rental;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -17,6 +18,9 @@ class RentalController extends Controller
     {
         $categories = Category::where('category_type', 'rental')->get();
         // dd($categories);
+        if (Auth::check()) {
+            Auth::user()->load('rentalFavourites');
+        }
         $products = Rental::all();
         return view('Front.Content.Rental.RentalPosts', compact('categories', 'products'));
     }
@@ -61,6 +65,7 @@ public function storeRentalOrder(Request $request)
 {
     // 📋 Step 1: Validate the incoming request
     $validatedData = $request->validate([
+        'rental_id' => 'required|exists:rentals,id',
         'username'   => 'required|string|max:255',
         'address'    => 'required|string|max:500',
         'start_date' => 'required|date',
@@ -78,9 +83,9 @@ public function storeRentalOrder(Request $request)
     // 💰 Step 3: Calculate total amount
     $total_amount = $validatedData['total_days'] * $rental->rent_per_day;
 
-    // 🗂️ Step 4: Store booking and send mail
+    // 🗂️ Step 4: Store booking
     try {
-        Book::create([
+        $booking = Book::create([
             'user_id'      => auth()->id(),
             'rental_id'    => $rental->id,
             'username'     => $validatedData['username'],
@@ -92,13 +97,16 @@ public function storeRentalOrder(Request $request)
             'contact'      => $validatedData['contact'],
         ]);
 
-        // 📩 Step 5: Send email to admin
-        $adminEmail = config('mail.admin_email'); // ✅ Recommended way
-        Mail::to($adminEmail)->send(new AdminNotification($rental));
+        // 🔔 Step 5: Notify all admins
+        $admins = User::where('role', 'admin')->get();
+        foreach ($admins as $admin) {
+            $admin->notify(new NewOrderNotification($booking));
+        }
 
         return redirect()->back()->with('success', 'Your rental order has been placed successfully!');
     } catch (\Exception $e) {
         return redirect()->back()->with('error', 'Something went wrong: ' . $e->getMessage());
     }
 }
+
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 use App\Models\Rental;
+use App\Models\Thrift;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,5 +17,10 @@ class Category extends Model
     public function rental()
     {
      return  $this->hasMany(Rental::class);
+    }
+
+    public function thrift()
+    {
+     return  $this->hasMany(Thrift::class);
     }
 }

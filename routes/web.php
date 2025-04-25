@@ -2,13 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
-
-use Illuminate\Support\Facades\Mail;
-use App\Mail\AdminNotification;
-use App\Models\Rental;
-use App\Models\Thrift;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\FavouriteController;
 use App\Http\Controllers\Front\HomeController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Front\ThriftController;
 use App\Http\Controllers\Front\RentalController;
 use App\Http\Controllers\Admin\RentalPostController;
@@ -16,15 +13,6 @@ use App\Http\Controllers\Admin\ThriftPostController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Front\LoginController;
 
-
-Route::get('/test-mail', function () {
-    $rental = Rental::latest()->first(); // ya koi bhi available rental
-    if (!$rental) return "No rental found.";
-
-    Mail::to(env('ADMIN_EMAIL'))->send(new AdminNotification($rental));
-
-    return "Test email sent!";
-});
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -44,7 +32,7 @@ Route::post('/rentalOrderstore', [RentalController::class, 'storeRentalOrder'])-
 
 ///////////////////  ViewThriftPosts Routes  ///////////////
 
-Route::get('/thrifts/{category_id}', [ThriftController::class, 'FilterByCategory'])->name('thrifts.bycategory');
+Route::get('/thrifts/{category_id}', [ThriftController::class, 'FilterByCategory'])->name('thrift.bycategory');
 Route::get('/thriftDetail/{thrift_id}', [ThriftController::class, 'ThriftDetail'])->name('thrift.detail');
 Route::get('/thriftOrder/{thrift_id}', [ThriftController::class, 'ThriftOrder'])->name('thrift.order');
 Route::post('/thriftOrderstore', [ThriftController::class, 'storeThriftOrder'])->name('thrift.order.store');
@@ -61,6 +49,15 @@ Route::get('/logout',[LoginController::class,'logout'])->name('logout');
 Route::group(['prefix' => 'admin','middleware'=>'admin'], function ()
 {
 Route::get('/',[AdminDashboardController::class,'index'])->name('admin.dashboard');
+
+Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+Route::post('/admin/notification/read/{id}', [AdminDashboardController::class, 'markAsRead'])->name('markAsRead');
+
+///////////////////   Admin Show_Notification  ///////////////
+
+Route::get('/rental-orders', [OrderController::class, 'rentalOrders'])->name('rental.orders');
+Route::get('/thrift-orders', [OrderController::class, 'thriftOrders'])->name('thrift.orders');
+
 ///////////////////  Category Routes  ///////////////
 
 Route::get('/indexCategory',[CategoryController::class,'index'])->name('index.category');
@@ -90,4 +87,17 @@ Route::post('/updateThrift/{id}', [ThriftPostController::class, 'update'])->name
 Route::any('/deleteThrift/{id}', [ThriftPostController::class, 'destroy'])->name('delete.thrift');
 
 });
+
+///////////////////  Favourite Routes  ///////////////
+
+Route::middleware('auth')->group(function () {
+    Route::post('/favourite/rental/{rental}', [FavouriteController::class, 'addRental'])->name('favourite.rental');
+    Route::delete('/favourite/rental/{rental}', [FavouriteController::class, 'removeRental'])->name('unfavourite.rental');
+
+    Route::post('/favourite/thrift/{thrift}', [FavouriteController::class, 'addThrift'])->name('favourite.thrift');
+    Route::delete('/favourite/thrift/{thrift}', [FavouriteController::class, 'removeThrift'])->name('unfavourite.thrift');
+
+    Route::get('/favourites', [FavouriteController::class, 'index'])->name('favourites.index');
+});
+
 

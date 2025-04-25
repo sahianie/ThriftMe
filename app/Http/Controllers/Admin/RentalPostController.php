@@ -36,12 +36,12 @@ class RentalPostController extends Controller
         // dd($request->all());
         $request->validate([
 
-            'category_id' => 'nullable|exists:categories,id',
+            'category_id' => 'required|exists:categories,id',
             'title' => 'required|string|max:255',
-            'size' => 'nullable|in:small,medium,large',
-            'material' => 'nullable|string|max:255',
-            'condition' => 'nullable|string|max:255',
-            'type' => 'nullable|in:men,women,kid',
+            'size' => 'required|in:small,medium,large',
+            'material' => 'required|string|max:255',
+            'condition' => 'required|string|max:255',
+            'type' => 'required|in:men,women,kid',
             'rent_per_day' => 'required|numeric|min:0',
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);

@@ -2,6 +2,9 @@
 
 namespace App\Models;
 use App\Models\Book;
+use App\Models\Thrift;
+use App\Models\Rental;
+use Illuminate\Support\Facades\Auth;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -49,4 +52,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(Book::class);
     }
+    public function rentalFavourites()
+{
+    return $this->morphedByMany(Rental::class, 'favouritable', 'favourites')->withTimestamps();
+}
+
+public function thriftFavourites()
+{
+    return $this->morphedByMany(Thrift::class, 'favouritable', 'favourites')->withTimestamps();
+}
+
+
 }
