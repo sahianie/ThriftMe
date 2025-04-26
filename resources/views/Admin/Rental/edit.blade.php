@@ -10,7 +10,7 @@
                     </a>
                 </div>
                 <div class="card-body">
-                    {{-- {{dd($data)}} --}}
+                  
                     <form action="{{ route('update.rental',$data->id) }}" enctype="multipart/form-data" method="post">
                         @csrf
                         @include('Admin.Rental.fields')

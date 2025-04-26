@@ -90,10 +90,47 @@ class RentalPostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
+    public function update(Request $request, $id)
+{
+    $request->validate([
+        'category_id' => 'required|exists:categories,id',
+        'title' => 'required|string|max:255',
+        'size' => 'required|in:small,medium,large',
+        'material' => 'required|string|max:255',
+        'condition' => 'required|string|max:255',
+        'type' => 'required|in:men,women,kid',
+        'rent_per_day' => 'required|numeric|min:0',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
+
+    // 🔄 Rental ko find karo
+    $rental = Rental::findOrFail($id);
+
+    // 🖼️ Nayi image milay to update karo
+    if ($request->hasFile('image')) {
+        // optional: purani image delete karna chaho to yahan kar sakte ho
+        $imagePath = $request->file('image')->store('rentals', 'public');
+    } else {
+        $imagePath = $rental->image; // purani image rakho
     }
+
+    // 🔧 Update fields
+    $rental->update([
+        'category_id' => $request->category_id,
+        'title' => $request->title,
+        'size' => $request->size,
+        'material' => $request->material,
+        'condition' => $request->condition,
+        'type' => $request->type,
+        'rent_per_day' => $request->rent_per_day,
+        'image' => $imagePath,
+    ]);
+
+    // ✅ Redirect with success message
+    return redirect()->route('index.rental')->with('success', 'RentalPost is Updated Successfully');
+}
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -118,4 +155,6 @@ class RentalPostController extends Controller
         return redirect()->route('index.rental')->with(['error' => 'Failed to delete Rental Post: '. $e->getMessage()], 500);
     }
     }
+
+    
 }

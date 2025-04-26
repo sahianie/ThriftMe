@@ -68,8 +68,8 @@ class ThriftPostController extends Controller
 
     public function update(Request $request, $id)
 {
-    
-    $validated= $request->validate([
+    // dd($request->all());
+    $request->validate([
         'category_id' => 'required|exists:categories,id',
         'title' => 'required|string|max:255',
         'size' => 'required|in:small,medium,large',
@@ -77,23 +77,21 @@ class ThriftPostController extends Controller
         'condition' => 'required|string|max:255',
         'type' => 'required|in:men,women,kid',
         'price' => 'required|numeric|min:0',
-        'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
-    dd($validated);
+
+    // 🔄 Thrift post ko find karo
     $thrift = Thrift::findOrFail($id);
-
-    // Check if image is uploaded
+    // dd($thrift);
+    // 🖼️ Nayi image milay to update karo
     if ($request->hasFile('image')) {
-        // Optional: delete old image from storage if you want
-        if ($thrift->image) {
-            Storage::disk('public')->delete($thrift->image);
-        }
-
+        // optional: purani image delete karni ho to yahan kar sakte ho
         $imagePath = $request->file('image')->store('thrifts', 'public');
     } else {
-        $imagePath = $thrift->image; // keep old image
+        $imagePath = $thrift->image; // purani image rakho
     }
 
+    // 🔧 Update fields
     $thrift->update([
         'category_id' => $request->category_id,
         'title' => $request->title,
@@ -105,10 +103,14 @@ class ThriftPostController extends Controller
         'image' => $imagePath,
     ]);
 
-    return redirect()->route('index.thrift')->with('success', 'Thrift Post Updated Successfully');
+    // ✅ Redirect with success message
+    return redirect()->route('index.thrift')->with('success', 'Thrift Post is Updated Successfully');
 }
 
 
+    
+
+    
     public function destroy(string $id)
     {
         try {

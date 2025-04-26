@@ -96,17 +96,17 @@
 </div>
 
 <div class="row">
-    <!-- Price -->
+    <!-- Rent -->
     <div class="col-md-6">
-        <div class="form-group">
-            <label for="rent_per_day">Price</label>
-            <input type="number" name="rent_per_day" class="form-control" id="rent_per_day" required min="1"
-                value="{{ old('rent_per_day', $data->rent_per_day ?? '') }}">
-            <span class="text-danger">
-                @error('rent_per_day') {{ $message }} @enderror
-            </span>
-        </div>
+    <div class="form-group">
+        <label for="price">Price</label>
+        <input type="number" name="price" class="form-control" id="price" required min="1"
+            value="{{ old('price', $data->price ?? '') }}">
+        <span class="text-danger">
+            @error('price') {{ $message }} @enderror
+        </span>
     </div>
+</div>
 
     <!-- Image Upload -->
     <div class="col-md-6">

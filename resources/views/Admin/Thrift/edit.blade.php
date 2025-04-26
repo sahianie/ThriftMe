@@ -9,9 +9,10 @@
                     </a>
                 </div>
                 <div class="card-body">
-                    {{-- {{ dd($data) }} --}}
+                   
                     <form action="{{ route('update.thrift', $data->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
                         @include('Admin.Thrift.fields')
                     </form>
                 </div>

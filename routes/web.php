@@ -57,6 +57,9 @@ Route::post('/admin/notification/read/{id}', [AdminDashboardController::class, '
 
 Route::get('/rental-orders', [OrderController::class, 'rentalOrders'])->name('rental.orders');
 Route::get('/thrift-orders', [OrderController::class, 'thriftOrders'])->name('thrift.orders');
+Route::delete('/rental-orders/{id}', [OrderController::class, 'rentaldestroy'])->name('rental-orders.destroy');
+Route::delete('/sold/{id}', [OrderController::class, 'thriftdestroy'])->name('sold.destroy');
+
 
 ///////////////////  Category Routes  ///////////////
 
@@ -83,7 +86,7 @@ Route::get('/createThrift', [ThriftPostController::class, 'create'])->name('crea
 Route::get('/indexThrift', [ThriftPostController::class, 'index'])->name('index.thrift');
 Route::post('/storeThrift', [ThriftPostController::class, 'store'])->name('store.thrift');
 Route::get('/editThrift/{id}', [ThriftPostController::class, 'edit'])->name('edit.thrift');
-Route::post('/updateThrift/{id}', [ThriftPostController::class, 'update'])->name('update.thrift');
+Route::put('/updateThrift/{id}', [ThriftPostController::class, 'update'])->name('update.thrift');
 Route::any('/deleteThrift/{id}', [ThriftPostController::class, 'destroy'])->name('delete.thrift');
 
 });

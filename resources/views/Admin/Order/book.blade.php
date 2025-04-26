@@ -48,7 +48,12 @@
                                                 <td>{{ $order->total_amount }}</td>
                                                 <td>{{ $order->contact }}</td>
                                                 <td>
-                                                    
+
+                                                    <form action="{{ route('rental-orders.destroy', $order->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this order?');">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                    </form>
                                                 </td>
                                             </tr>
                                             @endforeach

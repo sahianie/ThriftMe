@@ -45,10 +45,17 @@
                                                 <td>{{ $order->address }}</td>
                                                 <td>{{ $order->contact }}</td>
                                                 <td>{{ $order->total_amount }}</td>
-                                            
+                                                <td>
+                                                    <form action="{{ route('sold.destroy', $order->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this sold order?');">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                    </form>
+                                                </td>
                                             </tr>
                                             @endforeach
                                         </tbody>
+
                                     </table>
                                 </div>
                             </div>
