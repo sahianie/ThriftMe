@@ -29,8 +29,28 @@
                         <li><strong>Material:</strong> {{ $rental->material }}</li>
                         <li><strong>Condition:</strong> {{ $rental->condition }}</li>
                     </ul>
-                    <br>
-                    <br>
+
+                    <!-- Booked Dates Section Start -->
+                    <div class="booked-dates" style="margin-top: 30px; text-align: left;">
+                        <h4>Already Booked Dates:</h4>
+
+                        @if($bookings->count() > 0)
+                            <ul style="list-style: none; padding: 0;">
+                                @foreach($bookings as $booking)
+                                    <li> 
+                                        {{ \Carbon\Carbon::parse($booking->start_date)->format('d M Y') }} 
+                                        to 
+                                        {{ \Carbon\Carbon::parse($booking->end_date)->format('d M Y') }}
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <p style="color: green;">Currently no bookings! Available for any date.</p>
+                        @endif
+                    </div>
+                    <!-- Booked Dates Section End -->
+
+                    <br><br>
                     <a href="{{ route('rental.order', $rental->id) }}" class="site-btn btn-line">Book</a>
                 </div>
             </div>

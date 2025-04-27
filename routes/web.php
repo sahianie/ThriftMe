@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\FavouriteController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Front\ThriftController;
@@ -17,20 +18,25 @@ use App\Http\Controllers\Front\LoginController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+///////////////////  Feedback  ///////////////
+
+Route::get('/feedback', [FeedbackController::class, 'index'])->name('feedback');
+Route::post('/feedbackStore', [FeedbackController::class, 'store'])->name('feedback.store');
+
 ///////////////////  Main Categories ///////////////
 
 Route::get('/thrift', [ThriftController::class, 'index'])->name('thrift');
 Route::get('/rental', [RentalController::class, 'index'])->name('rental');
 
 
-///////////////////  ViewRentalPosts Routes  ///////////////
+///////////////////  ViewRentalPosts  ///////////////
 
 Route::get('/rentals/{category_id}', [RentalController::class, 'Filterbycategory'])->name('rentals.bycategory');
 Route::get('/rentalDetail/{rental_id}', [RentalController::class, 'Rentaldetail'])->name('rental.detail');
 Route::get('/rentalOrder/{rental_id}', [RentalController::class, 'Rentalorder'])->name('rental.order');
 Route::post('/rentalOrderstore', [RentalController::class, 'storeRentalOrder'])->name('rental.order.store');
 
-///////////////////  ViewThriftPosts Routes  ///////////////
+///////////////////  ViewThriftPosts  ///////////////
 
 Route::get('/thrifts/{category_id}', [ThriftController::class, 'FilterByCategory'])->name('thrift.bycategory');
 Route::get('/thriftDetail/{thrift_id}', [ThriftController::class, 'ThriftDetail'])->name('thrift.detail');
@@ -45,23 +51,20 @@ Route::post('/login',[LoginController::class,'login'])->name('user.login');
 Route::post('/store',[LoginController::class,'store'])->name('user.store');
 Route::get('/logout',[LoginController::class,'logout'])->name('logout');
 
+///////////////////   Admin Show_Notification  ///////////////
 
 Route::group(['prefix' => 'admin','middleware'=>'admin'], function ()
 {
-Route::get('/',[AdminDashboardController::class,'index'])->name('admin.dashboard');
 
-Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
 Route::post('/admin/notification/read/{id}', [AdminDashboardController::class, 'markAsRead'])->name('markAsRead');
-
-///////////////////   Admin Show_Notification  ///////////////
-
 Route::get('/rental-orders', [OrderController::class, 'rentalOrders'])->name('rental.orders');
 Route::get('/thrift-orders', [OrderController::class, 'thriftOrders'])->name('thrift.orders');
 Route::delete('/rental-orders/{id}', [OrderController::class, 'rentaldestroy'])->name('rental-orders.destroy');
 Route::delete('/sold/{id}', [OrderController::class, 'thriftdestroy'])->name('sold.destroy');
 
 
-///////////////////  Category Routes  ///////////////
+///////////////////  Category  ///////////////
 
 Route::get('/indexCategory',[CategoryController::class,'index'])->name('index.category');
 Route::get('/createCategory',[CategoryController::class,'create'])->name('create.category');
@@ -70,7 +73,7 @@ Route::get('/editCategory/{id}',[CategoryController::class,'edit'])->name('edit.
 Route::post('/updateCategory/{id}',[CategoryController::class,'update'])->name('update.category');
 Route::any('/deleteCategory/{id}',[CategoryController::class,'destroy'])->name('delete.category');
 
-///////////////////  Rental Routes  ///////////////
+///////////////////  Rental  ///////////////
 
 Route::get('/createRental',[RentalPostController::class,'create'])->name('create.rental');
 Route::get('/indexRental',[RentalPostController::class,'index'])->name('index.rental');
@@ -80,7 +83,7 @@ Route::post('/updateRental/{id}',[RentalPostController::class,'update'])->name('
 Route::any('/deleteRental/{id}',[RentalPostController::class,'destroy'])->name('delete.rental');
 
 
-///////////////////  Thrift Routes  ///////////////
+///////////////////  Thrift  ///////////////
 
 Route::get('/createThrift', [ThriftPostController::class, 'create'])->name('create.thrift');
 Route::get('/indexThrift', [ThriftPostController::class, 'index'])->name('index.thrift');
@@ -91,7 +94,7 @@ Route::any('/deleteThrift/{id}', [ThriftPostController::class, 'destroy'])->name
 
 });
 
-///////////////////  Favourite Routes  ///////////////
+///////////////////  Favourite   ///////////////
 
 Route::middleware('auth')->group(function () {
     Route::post('/favourite/rental/{rental}', [FavouriteController::class, 'addRental'])->name('favourite.rental');

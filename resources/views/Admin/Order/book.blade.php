@@ -32,7 +32,7 @@
                                                 <th>address </th>
                                                 <th>start_date </th>
                                                 <th>end_date </th>
-                                                <th>total_amount </th>
+                                                <th>amount </th>
                                                 <th>contact </th>
                                                 <th>Action</th>
                                             </tr>

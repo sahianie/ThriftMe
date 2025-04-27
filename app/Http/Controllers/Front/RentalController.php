@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Models\Category;
 use App\Models\User;
 use App\Models\Book;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Notifications\NewOrderNotification;
@@ -33,7 +34,7 @@ class RentalController extends Controller
     }
 
     public function Rentaldetail($rental_id)
- {
+{
     // Fetch rental post by ID
     $rental = Rental::find($rental_id);
 
@@ -42,9 +43,13 @@ class RentalController extends Controller
         return redirect()->back()->with('error', 'Rental not found.');
     }
 
+    // Fetch existing bookings for this rental
+    $bookings = Book::where('rental_id', $rental->id)->get(['start_date', 'end_date']);
+
     // Pass data to the view
-    return view('Front.Content.Rental.DetailPage', compact('rental'));
- }
+    return view('Front.Content.Rental.DetailPage', compact('rental', 'bookings'));
+}
+
 
  public function Rentalorder($rental_id)
 {
@@ -55,29 +60,49 @@ class RentalController extends Controller
 
     // Fetch rental post by ID
     $rental = Rental::where('id', $rental_id)->first();
+    $bookings = Book::where('rental_id', $rental->id)->get(['start_date', 'end_date']);
 
     // Pass data to the view
-    return view('Front.Content.Rental.RentalOrder', compact('rental'));
+    return view('Front.Content.Rental.RentalOrder', compact('rental','bookings'));
 }
-
 
 public function storeRentalOrder(Request $request)
 {
     // 📋 Step 1: Validate the incoming request
     $validatedData = $request->validate([
-        'rental_id' => 'required|exists:rentals,id',
-        'username'   => 'required|string|max:255',
-        'address'    => 'required|string|max:500',
-        'start_date' => 'required|date',
-        'end_date'   => 'required|date|after_or_equal:start_date',
-        'total_days' => 'required|integer|min:1',
-        'contact'    => 'required|string|max:20',
+        'rental_id'   => 'required|exists:rentals,id',
+        'username'    => 'required|string|max:255',
+        'address'     => 'required|string|max:500',
+        'start_date'  => 'required|date',
+        'end_date'    => 'required|date|after_or_equal:start_date',
+        'total_days'  => 'required|integer|min:1',
+        'contact'     => 'required|string|max:20',
     ]);
 
     // 🏠 Step 2: Fetch the rental
-    $rental = Rental::find($request->rental_id);
+    $rental = Rental::find($validatedData['rental_id']);
     if (!$rental) {
         return redirect()->back()->with('error', 'Rental item not found.');
+    }
+
+    // 🛑 Step 2.5: Check for date overlaps
+    $existingBookings = Book::where('rental_id', $rental->id)
+                            ->get();
+
+    $newStartDate = Carbon::parse($validatedData['start_date']);
+    $newEndDate   = Carbon::parse($validatedData['end_date']);
+
+    foreach ($existingBookings as $booking) {
+        $existingStartDate = Carbon::parse($booking->start_date);
+        $existingEndDate   = Carbon::parse($booking->end_date);
+
+        if (
+            ($newStartDate <= $existingEndDate) &&
+            ($newEndDate >= $existingStartDate)
+        ) {
+            // Dates overlap
+            return redirect()->back()->with('error', 'Sorry, selected dates are already booked.')->withInput();
+        }
     }
 
     // 💰 Step 3: Calculate total amount
@@ -108,5 +133,7 @@ public function storeRentalOrder(Request $request)
         return redirect()->back()->with('error', 'Something went wrong: ' . $e->getMessage());
     }
 }
+
+
 
 }

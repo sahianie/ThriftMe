@@ -18,15 +18,15 @@
 				<li><a href="{{ route('rental') }}">Rental</a></li>
 				<li><a href="{{ route('thrift') }}">Thrift</a></li>
 				<li><a href="{{ route('favourites.index') }}">Favourite</a></li>
-				<li><a href="contact.html">Contact</a></li>
+				<li><a href="{{ route('feedback') }}">Feedback</a></li>
 
 				@if (Auth::check())
     <!-- Agar user login hai to Logout button dikhaye -->
-    <a href="{{ route('logout') }}" class="btn" style="color: white">LOGOUT</a>
+   <strong> <a href="{{ route('logout') }}" class="btn" style="color: white">LOGOUT</a> </strong>
 
 @else
     <!-- Agar user logout hai to Login button dikhaye -->
-    <a href="{{ route('login') }}" class="btn"style="color:white" >LOGIN</a>
+	<strong> <a href="{{ route('login') }}" class="btn"style="color:white" >LOGIN</a> </strong>
 @endif
 			</ul>
 		</div>

@@ -32,30 +32,31 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         // Step 1: Normalize inputs
-        $category_name = ucfirst(strtolower($request->category_name));
-        $category_type = ucfirst(strtolower($request->category_type));
+$category_name = ucfirst(strtolower($request->category_name));
+$category_type = ucfirst(strtolower($request->category_type));
 
-        // Step 2: Overwrite request inputs
-        $request->merge([
-            'category_name' => $category_name,
-            'category_type' => $category_type,
-        ]);
+// Step 2: Overwrite request inputs
+$request->merge([
+    'category_name' => $category_name,
+    'category_type' => $category_type,
+]);
 
-        // Step 3: Manual case-insensitive uniqueness check for category_name
-        $existing = \App\Models\Category::whereRaw('LOWER(category_name) = ?', [strtolower($category_name)])->first();
-        if ($existing) {
-            throw ValidationException::withMessages([
-                'category_name' => 'The category name already exists (case-insensitive).',
-            ]);
-        }
+// Step 3: Check if the same category_name exists with the same category_type
+$existing = \App\Models\Category::whereRaw('LOWER(category_name) = ? AND LOWER(category_type) = ?', [strtolower($category_name), strtolower($category_type)])->first();
 
-        // Step 4: Validate category_type only
-        $request->validate([
-            'category_type' => [
-                'required',
-                'in:Rental,Thrifted', // Only these two allowed
-            ],
-        ]);
+if ($existing) {
+    throw ValidationException::withMessages([
+        'category_name' => 'The category name already exists with this category type.',
+    ]);
+}
+
+// Step 4: Validate category_type only
+$request->validate([
+    'category_type' => [
+        'required',
+        'in:Rental,Thrifted', // Only these two allowed
+    ],
+]);
 
         $categoryEntered = Category::create($request->all());
 
