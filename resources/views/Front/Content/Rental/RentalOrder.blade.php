@@ -54,7 +54,7 @@
 
                 <!-- Booked Button left side neeche shift -->
                 <div class="text-center mt-4">
-                    <button type="submit" class="site-btn btn-full">Booked</button>
+                    <button type="submit" class="site-btn btn-line">Booked</button>
                 </div>
 
             </form> <!-- Form close after both sides -->
@@ -65,6 +65,7 @@
             <div class="order-card">
                 <div class="order-details">
                     <h4 class="checkout-title">Your order</h4>
+                    <br>
                     <table class="order-table">
                         <thead>
                             <tr>
@@ -75,7 +76,7 @@
                         <tbody>
                             <tr>
                                 <td>{{ $rental->title }}</td>
-                                <td>${{ number_format($rental->rent_per_day, 2) }}</td>
+                                <td>PKR {{ number_format($rental->rent_per_day, 2) }}</td>
                             </tr>
 
                             <tr>
@@ -91,7 +92,7 @@
                         <tfoot>
                             <tr class="order-total">
                                 <th>Total</th>
-                                <th id="displayTotalAmount">$0.00</th>
+                                <th id="displayTotalAmount">PKR 0.00</th>
                             </tr>
                         </tfoot>
                     </table>

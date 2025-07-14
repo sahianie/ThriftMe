@@ -19,7 +19,7 @@
                     <h2>{{ $thrift->title }}</h2>
                     
                     <div class="pc-meta">
-                        <h4 class="price">{{ $thrift->price }}</h4>
+                        <h4 class="price">PKR {{ $thrift->price }}</h4>
                     </div>
 
                     <!-- Thrift Details -->

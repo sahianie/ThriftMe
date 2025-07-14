@@ -23,6 +23,11 @@
                     <b class="sidecontent"> Thrift </b>
                 </a>
 
+                <a class="nav-link " href="{{ route('index.notification') }}">
+                    <div class="sb-nav-link-icon sidecontent"><i class="fas fa-tachometer-alt"></i></div>
+                    <b class="sidecontent"> Notifications </b>
+                </a>
+
                 <a class="nav-link " href="{{ route('rental.orders') }}">
                     <div class="sb-nav-link-icon sidecontent"><i class="fas fa-tachometer-alt"></i></div>
                     <b class="sidecontent"> Booking </b>

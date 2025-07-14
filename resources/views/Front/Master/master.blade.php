@@ -9,6 +9,8 @@
 
 <style>
 	/* Footer Styles */
+
+
 footer {
     background-color: white; /* Background color for footer */
     color: black; /* Text color */
@@ -83,6 +85,34 @@ footer ul li a:hover {
     font-size: 1em;
     text-align: center;
 }
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.hero-section {
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.header {
+  display: flex;
+  justify-content: center;  /* Centers horizontally (left to right) */
+  align-items: center;      /* Centers vertically (top to bottom) */
+  height: 60px;             /* Adjust the height of the header */
+}
+
+.site-logo span {
+  font-size: 24px;  /* Adjust the size of the text */
+  font-weight: bold; /* Make it bold */
+  color: #fff;      /* Choose the text color */
+  font-family: 'Arial', sans-serif; /* Choose a font */
+}
+
 </style>
 
 </head>
@@ -99,6 +129,55 @@ footer ul li a:hover {
 	@include('Front.Partial.Footer')
 	
     @include('Front.Partial.Script')
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sly/1.6.1/sly.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    // Rental Slider
+    var $rentalFrame = $('.rental-slider');
+    var $rentalSlidee = $rentalFrame.find('ul.slidee');
+
+    $rentalFrame.sly({
+        horizontal: 1,
+        itemNav: 'basic',
+        smart: 1,
+        activateOn: 'click',
+        mouseDragging: 1,
+        touchDragging: 1,
+        releaseSwing: 1,
+        startAt: 0,
+        scrollBy: 1,
+        speed: 300,
+        elasticBounds: 1,
+        easing: 'easeOutExpo',
+        dragHandle: 1,
+        dynamicHandle: 1,
+    });
+
+    // Thrift Slider
+    var $thriftFrame = $('.thrift-slider');
+    var $thriftSlidee = $thriftFrame.find('ul.slidee');
+
+    $thriftFrame.sly({
+        horizontal: 1,
+        itemNav: 'basic',
+        smart: 1,
+        activateOn: 'click',
+        mouseDragging: 1,
+        touchDragging: 1,
+        releaseSwing: 1,
+        startAt: 0,
+        scrollBy: 1,
+        speed: 300,
+        elasticBounds: 1,
+        easing: 'easeOutExpo',
+        dragHandle: 1,
+        dynamicHandle: 1,
+    });
+});
+</script>
 
     </body>
 </html>

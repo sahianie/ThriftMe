@@ -19,7 +19,7 @@
                     <h2>{{ $rental->title }}</h2>
                     
                     <div class="pc-meta">
-                        <h4 class="price">{{ $rental->rent_per_day }}</h4>
+                        <h4 class="price">PKR {{ $rental->rent_per_day }}</h4>
                     </div>
 
                     <!-- Rental Details -->

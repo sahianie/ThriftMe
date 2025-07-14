@@ -10,8 +10,15 @@ use Illuminate\Http\Request;
 
 class FavouriteController extends Controller
 {
+
     public function addRental(Rental $rental)
     {
+        // Check if user is authenticated
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'You need to log in to add to favourites.');
+        }
+    
+        // If user is authenticated, add to favourites
         Auth::user()->rentalFavourites()->syncWithoutDetaching([$rental->id]);
         return back()->with('success', 'Added to favourites!');
     }
