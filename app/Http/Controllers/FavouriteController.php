@@ -19,32 +19,72 @@ class FavouriteController extends Controller
         }
     
         // If user is authenticated, add to favourites
-        Auth::user()->rentalFavourites()->syncWithoutDetaching([$rental->id]);
+       /** @var \App\Models\User $user */
+$user = Auth::user();
+
+if ($user) {
+    $user->rentalFavourites()->syncWithoutDetaching([$rental->id]);
+}
+
         return back()->with('success', 'Added to favourites!');
     }
 
     public function removeRental(Rental $rental)
     {
-        Auth::user()->rentalFavourites()->detach($rental->id);
+       /** @var \App\Models\User $user */
+$user = Auth::user();
+
+if ($user) {
+    $user->rentalFavourites()->detach($rental->id);
+}
+
         return back()->with('success', 'Removed from favourites!');
     }
 
     public function addThrift(Thrift $thrift)
     {
-        Auth::user()->thriftFavourites()->syncWithoutDetaching([$thrift->id]);
+       /** @var \App\Models\User $user */
+$user = Auth::user();
+
+if ($user) {
+    $user->thriftFavourites()->syncWithoutDetaching([$thrift->id]);
+}
+
         return back()->with('success', 'Added to favourites!');
     }
 
     public function removeThrift(Thrift $thrift)
     {
-        Auth::user()->thriftFavourites()->detach($thrift->id);
+      /** @var \App\Models\User $user */
+$user = Auth::user();
+
+if ($user) {
+    $user->thriftFavourites()->detach($thrift->id);
+}
+
         return back()->with('success', 'Removed from favourites!');
     }
 
     public function index()
     {
-        $rentalFavourites = Auth::user()->rentalFavourites()->latest()->get();
-        $thriftFavourites = Auth::user()->thriftFavourites()->latest()->get();
+       /** @var \App\Models\User $user */
+$user = Auth::user();
+
+if ($user) {
+    $rentalFavourites = $user->rentalFavourites()->latest()->get();
+} else {
+    $rentalFavourites = collect(); // empty collection if no user logged in
+}
+
+       /** @var \App\Models\User $user */
+$user = Auth::user();
+
+if ($user) {
+    $thriftFavourites = $user->thriftFavourites()->latest()->get();
+} else {
+    $thriftFavourites = collect(); // empty collection if no user logged in
+}
+
 
         return view('Front.Content.Favourite', compact('rentalFavourites', 'thriftFavourites'));
     }

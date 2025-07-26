@@ -29,7 +29,13 @@ class AdminDashboardController extends Controller
 
 public function markAsRead($id)
 {
-    $notification = auth()->user()->notifications()->find($id);
+   /** @var \App\Models\User $user */
+$user = auth()->user();
+
+if ($user) {
+    $notification = $user->notifications()->find($id);
+}
+
     if ($notification) {
         $notification->markAsRead();
     }
