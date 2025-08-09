@@ -34,7 +34,8 @@
             <div class="col-md-3">
                 <div class="info-panel p-4 text-center rounded" style="background-color: #ff99b6;">
                     <div class="info-icon mb-3">
-                        <i class="fas fa-home fa-3x" style="color: #af99ff;"></i>
+                       <i class="fa-solid fa-boxes-packing fa-3x" style="color: #af99ff;"></i>
+
                     </div>
                     <div class="info-content">
                         <h5 class="info-title mb-2" style="color: white;">Total Rentals</h5>

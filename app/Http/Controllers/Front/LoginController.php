@@ -22,15 +22,42 @@ class LoginController extends Controller
 
     public function  store(Request $request)
     {
-        $request->validate(
-            [
-                'name' => 'required|string|min:4|max:150|regex:/^(?! )[a-zA-Z ]*(?<! )$/u',
-                'email' => 'required|string|unique:users|max:255|email|regex:/^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/',
-                'password' => 'required|string|min:4|max:9|confirmed|regex:/^(?=.*[0-9])(?=.*[\W_]).+$/',
-                'password_confirmation' => 'required|string|min:4|max:9',
+        $request->validate([
+    'name' => 'required|string|min:4|max:150|regex:/^(?!\s)[a-zA-Z]+(?:\s[a-zA-Z]+)*(?<!\s)$/u',
+    'email' => 'required|string|unique:users|max:255|email|regex:/^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/',
+    'password' => 'required|string|min:4|max:10|confirmed|regex:/^(?=.*[0-9])(?=.*[A-Za-z])(?=.*[\W_]).+$/',
+    'password_confirmation' => 'required|string|min:4|max:10',
+], [
+    // Name field errors
+    'name.required' => 'Name is required.',
+    'name.string' => 'Name must be text only.',
+    'name.min' => 'Name must be at least 4 characters.',
+    'name.max' => 'Name must not be more than 150 characters.',
+    'name.regex' => 'Name must only contain letters and spaces (no spaces at start or end).',
 
-            ]
-        );
+    // Email field errors
+    'email.required' => 'Email is required.',
+    'email.string' => 'Email must be valid text.',
+    'email.unique' => 'This email is already registered.',
+    'email.max' => 'Email must not be more than 255 characters.',
+    'email.email' => 'Please enter a valid email format.',
+    'email.regex' => 'Email format is invalid.',
+
+    // Password field errors
+    'password.required' => 'Password is required.',
+    'password.string' => 'Password must be valid text.',
+    'password.min' => 'Password must be at least 4 characters.',
+    'password.max' => 'Password must not be more than 10 characters.',
+    'password.confirmed' => 'Password confirmation does not match.',
+    'password.regex' => 'Password must contain at least one alphabetic_letter, one digit, and one special character.',
+
+    // Password confirmation errors
+    'password_confirmation.required' => 'Please confirm your password.',
+    'password_confirmation.string' => 'Password confirmation must be valid text.',
+    'password_confirmation.min' => 'Password confirmation must be at least 4 characters.',
+    'password_confirmation.max' => 'Password confirmation must not be more than 10 characters.',
+]);
+
         $dataEntered = User::create([
             "name" => $request->name,
             "email" => $request->email,

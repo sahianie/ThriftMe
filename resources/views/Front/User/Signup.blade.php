@@ -46,7 +46,7 @@
                 <div class="navbar-brand-box" style="text-align: center">
                     <a href="index.html">
                         <span><img src="{{ asset('assets/admin/img/logo.png') }}" alt="logo"
-                                style="width: 80px; height: 40%; transform: scale(2.6); transition: transform 0.3s;" />
+                                style="width: 80px; height: 40%; transform: scale(2.1); transition: transform 0.3s;" />
                         </span>
                     </a>
                 </div>
