@@ -56,9 +56,10 @@ class ThriftController extends Controller
     {
         // ✅ Validate fields
         $validatedData = $request->validate([
-            'username' => 'required|string|max:255',
-            'address'  => 'required|string|max:500',
-            'contact'  => 'required|string|max:20',
+            'username' => 'required|string|regex:/^[a-zA-Z\s]+$/|min:3|max:50',
+            'address'  => 'required|string|min:10|max:255',
+            'contact' => 'required|string|regex:/^\+?[0-9\s\-]+$/|min:7|max:20',
+
         ]);
 
         $thrift = Thrift::find($request->thrift_id);
@@ -67,23 +68,23 @@ class ThriftController extends Controller
             return redirect()->back()->with('error', 'Thrift item not found.');
         }
 
-         // 💾 Step 3: Save sold record
-    $sold = Sold::create([
-        'user_id'      => auth()->id(),
-        'thrift_id'    => $thrift->id,
-        'username'     => $validatedData['username'],
-        'address'      => $validatedData['address'],
-        'contact'      => $validatedData['contact'],
-        'total_amount' => $thrift->price ?? 0, // Ya kisi aur amount logic se
-    ]);
+        // 💾 Step 3: Save sold record
+        $sold = Sold::create([
+            'user_id'      => auth()->id(),
+            'thrift_id'    => $thrift->id,
+            'username'     => $validatedData['username'],
+            'address'      => $validatedData['address'],
+            'contact'      => $validatedData['contact'],
+            'total_amount' => $thrift->price ?? 0, // Ya kisi aur amount logic se
+        ]);
 
-    // 🔔 Step 4: Notify admin
-    $admins = User::where('role', 'admin')->get();
-    foreach ($admins as $admin) {
-        $admin->notify(new NewSoldNotification($sold));
+        // 🔔 Step 4: Notify admin
+        $admins = User::where('role', 'admin')->get();
+        foreach ($admins as $admin) {
+            $admin->notify(new NewSoldNotification($sold));
+        }
+
+        // ✅ Step 5: Return with success
+        return redirect()->back()->with('success', 'Thrift order placed successfully!');
     }
-
-    // ✅ Step 5: Return with success
-    return redirect()->back()->with('success', 'Thrift order placed successfully!');
-}
 }

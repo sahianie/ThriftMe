@@ -11,14 +11,26 @@
                     <h4 class="checkout-title">Billing Address</h4>
                     <div class="row">
                         <div class="col-md-12 mb-3">
-                            <input style="background-color: #f3f4f6; border: 1px solid #ccc;" type="text" id="Username" name="username" placeholder="Username *">
+                            <input style="background-color: #f3f4f6; border: 1px solid #ccc;" type="text" id="Username" name="username" placeholder="Username *" value="{{ old('username') }}">
+                            @error('username')
+                                <small style="color: red;">{{ $message }}</small>
+                            @enderror
                         </div>
+
                         <div class="col-md-12 mb-3">
-                            <input style="background-color: #f3f4f6; border: 1px solid #ccc;" type="text" id="Address" name="address" placeholder="Address *">
+                            <input style="background-color: #f3f4f6; border: 1px solid #ccc;" type="text" id="Address" name="address" placeholder="Address *" value="{{ old('address') }}">
+                            @error('address')
+                                <small style="color: red;">{{ $message }}</small>
+                            @enderror
                         </div>
+
                         <div class="col-md-12 mb-3">
-                            <input style="background-color: #f3f4f6; border: 1px solid #ccc;" type="text" id="Contact" name="contact" placeholder="Contact *">
+                            <input style="background-color: #f3f4f6; border: 1px solid #ccc;" type="text" id="Contact" name="contact" placeholder="Contact *" value="{{ old('contact') }}">
+                            @error('contact')
+                                <small style="color: red;">{{ $message }}</small>
+                            @enderror
                         </div>
+
                         <input type="hidden" name="thrift_id" value="{{ $thrift->id }}">
                     </div>
                     <div class="mt-4">

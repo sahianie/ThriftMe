@@ -57,8 +57,8 @@ Route::group(['prefix' => 'admin','middleware'=>'admin'], function ()
 {
 
 Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
-Route::get('/admin/notification', [AdminDashboardController::class, 'notification'])->name('index.notification');
-Route::post('/admin/notification/read/{id}', [AdminDashboardController::class, 'markAsRead'])->name('markAsRead');
+Route::get('/admin/notification', [OrderController::class, 'notification'])->name('index.notification');
+Route::post('/admin/notification/read/{id}', [OrderController::class, 'markAsRead'])->name('markAsRead');
 Route::get('/rental-orders', [OrderController::class, 'rentalOrders'])->name('rental.orders');
 Route::get('/thrift-orders', [OrderController::class, 'thriftOrders'])->name('thrift.orders');
 Route::delete('/rental-orders/{id}', [OrderController::class, 'rentaldestroy'])->name('rental-orders.destroy');

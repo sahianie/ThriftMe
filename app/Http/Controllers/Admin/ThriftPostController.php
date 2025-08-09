@@ -25,12 +25,12 @@ class ThriftPostController extends Controller
     {
         $request->validate([
             'category_id' => 'required|exists:categories,id',
-            'title' => ['required', 'string', 'max:255', 'regex:/^[A-Za-z\s]+$/'],
+            'title' => ['required', 'string', 'min:3', 'max:50', 'regex:/^[A-Za-z\s]+$/'],
             'size' => 'required|in:small,medium,large',
-            'material' => ['required', 'string', 'max:255', 'regex:/^[A-Za-z\s]+$/'],
+            'material' => ['required', 'string','min:3', 'max:50', 'regex:/^[A-Za-z\s]+$/'],
             'condition' => 'required|string|max:255',
             'type' => 'required|in:men,women,kid',
-            'price' => ['required', 'regex:/^\d+$/', 'min:1'],
+            'price' => ['required', 'regex:/^\d+$/', 'min:1', 'max:200,000'],
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -71,12 +71,12 @@ class ThriftPostController extends Controller
     // dd($request->all());
     $request->validate([
         'category_id' => 'required|exists:categories,id',
-        'title' => ['required', 'string', 'max:255', 'regex:/^[A-Za-z\s]+$/'],
+        'title' => ['required', 'string', 'min:3', 'max:50', 'regex:/^[A-Za-z\s]+$/'],
         'size' => 'required|in:small,medium,large',
-        'material' => ['required', 'string', 'max:255', 'regex:/^[A-Za-z\s]+$/'],
+        'material' => ['required', 'string', 'min:3', 'max:50', 'regex:/^[A-Za-z\s]+$/'],
         'condition' => 'required|string|max:255',
         'type' => 'required|in:men,women,kid',
-        'price' => ['required', 'regex:/^\d+$/', 'min:1'],
+        'price' => ['required', 'regex:/^\d+$/', 'min:1', 'max:200,000'],
         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
 

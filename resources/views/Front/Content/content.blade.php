@@ -1,11 +1,18 @@
 @extends('Front.Master.master')
 @section('content')
 
-<!-- Hero section -->
-<section class="hero-section" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQQBV2jMDlc8vxdXXlmnYo8Y_qFvDVjFgNFQ&s'); background-size: cover; background-position: center; height: 100vh;">
+<style>
+.hero-section {
+    background-image: url("{{ asset('assets/admin/img/home.jpg') }}");
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}
+</style>
+
+<section class="hero-section">
 </section>
 
-<!-- Hero section end -->
 
 <section class="intro-section spad pb-0">
  <div class="section-title">

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('feedback', function (Blueprint $table) {
         $table->id();
         $table->string('first_name');
-        $table->string('last_name');
+        $table->string('last_name')->nullable();
         $table->string('subject')->nullable();
         $table->text('message');
         $table->timestamps();

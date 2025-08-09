@@ -20,12 +20,11 @@ class RentalController extends Controller
         // dd($categories);
         if (Auth::check()) {
             /** @var \App\Models\User $user */
-$user = Auth::user();
+            $user = Auth::user();
 
-if ($user) {
-    $user->load('rentalFavourites');
-}
-
+            if ($user) {
+                $user->load('rentalFavourites');
+            }
         }
         $products = Rental::all();
         return view('Front.Content.Rental.RentalPosts', compact('categories', 'products'));
@@ -76,12 +75,13 @@ if ($user) {
         // 📋 Step 1: Validate the incoming request
         $validatedData = $request->validate([
             'rental_id'   => 'required|exists:rentals,id',
-            'username'    => 'required|string|max:255',
-            'address'     => 'required|string|max:500',
+            'username' => 'required|string|regex:/^[a-zA-Z\s]+$/|min:3|max:50',
+            'address'  => 'required|string|min:10|max:255',
             'start_date'  => 'required|date',
             'end_date'    => 'required|date|after_or_equal:start_date',
             'total_days'  => 'required|integer|min:1',
-            'contact'     => 'required|string|max:20',
+           'contact' => 'required|string|regex:/^\+?[0-9\s\-]+$/|min:7|max:20',
+
         ]);
 
         // 🏠 Step 2: Fetch the rental

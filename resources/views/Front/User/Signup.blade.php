@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,9 +24,9 @@
         }
 
         body {
-            background-image: url("https://i.pinimg.com/564x/48/d8/e1/48d8e18a2c8a344a91ba95cf6f51f1bd.jpg");
-            background-repeat: no-repeat;
-            background-size: cover;
+             background-image: url("{{ asset('assets/admin/img/register.jpg') }}");
+        background-repeat: no-repeat;
+        background-size: cover;
         }
 
         .btn {
@@ -46,15 +45,16 @@
             <div class="card-header">
                 <div class="navbar-brand-box" style="text-align: center">
                     <a href="index.html">
-                        <span><img src="{{ asset('assets/admin/img/seeker.png') }}" alt="" width="80px"
-                                height="40%"></span>
+                        <span><img src="{{ asset('assets/admin/img/logo.png') }}" alt="logo"
+                                style="width: 80px; height: 40%; transform: scale(2.6); transition: transform 0.3s;" />
+                        </span>
                     </a>
                 </div>
                 <div class="card-body">
                     @if (session('error'))
-                        <div class="alert alert-danger">
-                            {{ session('error') }}
-                        </div>
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
                     @endif
                     <form action="{{route('user.store')}}" method="post">
                         @csrf
@@ -64,7 +64,7 @@
                                 value="{{ old('name') }}" />
                             <span class="text-danger">
                                 @error('name')
-                                    {{ $message }}
+                                {{ $message }}
                                 @enderror
                             </span>
                         </div>
@@ -74,16 +74,16 @@
                                 value="{{ old('email') }}" />
                             <span class="text-danger">
                                 @error('email')
-                                    {{ $message }}
+                                {{ $message }}
                                 @enderror
                             </span>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label"> <b> Enter Password </b></label>
-                            <input type="password" class="form-control" id="password" name="password"/>
+                            <input type="password" class="form-control" id="password" name="password" />
                             <span class="text-danger">
                                 @error('password')
-                                    {{ $message }}
+                                {{ $message }}
                                 @enderror
                             </span>
                         </div>
@@ -92,7 +92,7 @@
                             <input type="password" class="form-control" id="password" name="password_confirmation" />
                             <span class="text-danger">
                                 @error('password_confirmation')
-                                    {{ $message }}
+                                {{ $message }}
                                 @enderror
                             </span>
                         </div>

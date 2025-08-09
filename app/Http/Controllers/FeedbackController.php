@@ -16,10 +16,10 @@ class FeedbackController extends Controller
     public function store(Request $request)
 {
     $request->validate([
-        'first_name' => 'required|string|max:255',
-        'last_name' => 'required|string|max:255',
-        'subject' => 'nullable|string|max:255',
-        'message' => 'required|string',
+        'first_name' => 'required|string|min:2|max:30|regex:/^[A-Za-z\s]+$/',
+        'last_name'  => 'nullable|string|min:2|max:30|regex:/^[A-Za-z\s]+$/',
+        'subject'    => 'nullable|string|min:3|max:100',
+        'message'    => 'required|string|min:5|max:500',
     ]);
 
       // Store the feedback data in the database

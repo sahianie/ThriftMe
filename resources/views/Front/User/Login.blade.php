@@ -24,7 +24,7 @@
         }
 
         body {
-            background-image: url("https://i.pinimg.com/564x/48/d8/e1/48d8e18a2c8a344a91ba95cf6f51f1bd.jpg");
+            background-image: url("{{ asset('assets/admin/img/login.jpg') }}");
             background-repeat: no-repeat;
             background-size: cover;
         }
@@ -45,8 +45,9 @@
             <div class="card-header">
                 <div class="navbar-brand-box" style="text-align: center">
                     <a href="index.html">
-                        <span><img src="{{ asset('assets/admin/img/logo.png') }}" alt="" width="80px"
-                                height="40%"></span>
+                        <span><img src="{{ asset('assets/admin/img/logo.png') }}" alt="logo"
+                                style="width: 80px; height: 40%; transform: scale(2.6); transition: transform 0.3s;" />
+                        </span>
                     </a>
                 </div>
                 <div class="card-body">
@@ -65,7 +66,10 @@
                     <form action="{{ route('user.login') }}" method="post">
                         @csrf
                         <div class="mb-3">
-                            <label for="email" class="form-label"> <b> Enter Email</b></label>
+                            <label for="email" class="form-label">
+                                <b style="color: #000000;">Enter Email</b>
+                            </label>
+
                             <input type="text" class="form-control" id="email" name="email" value="{{ old('email') }}" />
                             <span class="text-danger">
                                 @error('email')
@@ -74,7 +78,10 @@
                             </span>
                         </div>
                         <div class="mb-3">
-                            <label for="password" class="form-label"> <b> Enter Password </b></label>
+                            <label for="password" class="form-label">
+                                <b style="color: #000000;">Enter Password</b>
+                            </label>
+
                             <input type="password" class="form-control" id="password" name="password" />
                             <span class="text-danger">
                                 @error('password')

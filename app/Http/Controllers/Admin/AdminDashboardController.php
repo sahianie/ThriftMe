@@ -21,26 +21,5 @@ class AdminDashboardController extends Controller
         return view('Admin.Content.content', compact('totalRentals', 'totalThrifts', 'totalBookOrders', 'totalSoldOrders'));
     }
 
-    public function notification()
-{
-    $notifications = auth()->user()->notifications; 
-    return view('Admin.Order.notification', compact('notifications'));
-}
-
-public function markAsRead($id)
-{
-   /** @var \App\Models\User $user */
-$user = auth()->user();
-
-if ($user) {
-    $notification = $user->notifications()->find($id);
-}
-
-    if ($notification) {
-        $notification->markAsRead();
-    }
-    return back();
-}
-
-
+    
 }
