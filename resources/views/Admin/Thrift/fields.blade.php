@@ -96,17 +96,17 @@
 </div>
 
 <div class="row">
-    <!-- Rent -->
+    <!-- Price -->
     <div class="col-md-6">
-    <div class="form-group">
-        <label for="price">Price</label>
-        <input type="number" name="price" class="form-control" id="price" required min="1"
-            value="{{ old('price', $data->price ?? '') }}">
-        <span class="text-danger">
-            @error('price') {{ $message }} @enderror
-        </span>
+        <div class="form-group">
+            <label for="price">Price</label>
+            <input type="number" name="price" class="form-control" id="price" required min="100"
+                value="{{ old('price', $data->price ?? '') }}">
+            <span class="text-danger">
+                @error('price') {{ $message }} @enderror
+            </span>
+        </div>
     </div>
-</div>
 
     <!-- Image Upload -->
     <div class="col-md-6">
@@ -117,9 +117,11 @@
                 @error('image') {{ $message }} @enderror
             </span>
 
+            <!-- Show existing image if available -->
             @if (!empty($data->image))
                 <div class="mt-2">
-                    <img style="height:70px;width:70px;border-radius:100%" src="{{ asset('storage/' . $data->image) }}" width="100px">
+                    <img id="previewImage" style="height:70px;width:70px;border-radius:100%" 
+                        src="{{ asset('storage/' . $data->image) }}">
                 </div>
             @endif
         </div>
@@ -133,3 +135,13 @@
         <b> {{ !empty($data) ? 'Update Thrift' : 'Add Thrift' }} </b>
     </button>
 </div>
+
+<!-- Optional JS for preview -->
+<script>
+    document.getElementById('image').addEventListener('change', function(event){
+        const [file] = this.files;
+        if(file){
+            document.getElementById('previewImage').src = URL.createObjectURL(file);
+        }
+    });
+</script>

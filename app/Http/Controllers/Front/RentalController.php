@@ -17,23 +17,29 @@ class RentalController extends Controller
     public function index()
     {
         $categories = Category::where('category_type', 'rental')->get();
-        // dd($categories);
-        if (Auth::check()) {
-            /** @var \App\Models\User $user */
-            $user = Auth::user();
 
+        if (Auth::check()) {
+            $user = Auth::user();
             if ($user) {
-                $user->load('rentalFavourites');
+                $user = Auth::user();
+                $rentalFavourites = $user->rentalFavourites; // load kar diya
+
             }
         }
-        $products = Rental::all();
+
+        // 🔹 Latest rentals first
+        $products = Rental::latest()->get(); // equivalent to orderBy('created_at', 'desc')
+
         return view('Front.Content.Rental.RentalPosts', compact('categories', 'products'));
     }
 
     public function Filterbycategory($category_id)
     {
         $categories = Category::where('category_type', 'rental')->get();
-        $products = Rental::where('category_id', $category_id)->get();
+
+        // 🔹 Latest rentals first for selected category
+        $products = Rental::where('category_id', $category_id)->latest()->get();
+
         return view('Front.Content.Rental.RentalByCategory', compact('categories', 'products'));
     }
 
@@ -80,8 +86,18 @@ class RentalController extends Controller
             'start_date'  => 'required|date',
             'end_date'    => 'required|date|after_or_equal:start_date',
             'total_days'  => 'required|integer|min:1',
-           'contact' => 'required|string|regex:/^\+?[0-9\s\-]+$/|min:7|max:20',
-
+            'contact' => [
+                'required',
+                'string',
+                'min:11',
+                'max:14',
+                'regex:/^(\+92|0)[1-9][0-9]{7,10}$/'
+            ]
+        ], [
+            'username.regex' => 'Username should only contain letters and spaces',
+            'contact.min'   => 'Phone number too short (min 11 digits)',
+            'contact.max'   => 'Phone number too long (max 14 digits)',
+            'contact.regex' => 'Invalid Pakistani number format. Must start with +92 or 0',
         ]);
 
         // 🏠 Step 2: Fetch the rental

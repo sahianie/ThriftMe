@@ -26,7 +26,7 @@
     <li>
      <div class="intro-item">
       <figure>
-       <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->title ?? 'Product' }}" style="height:300px; width:100%; object-fit:cover;">
+       <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->title ?? 'Product' }}" style="height:300px; width:auto;">
       </figure>
       <div class="product-info">
        <h5>{{ $product->title }}</h5>

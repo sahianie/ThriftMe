@@ -53,7 +53,7 @@
                                                         <td>{{ $item->price }}</td>
                                                         <td>
                                                             @if($item->image)
-                                                                <img src="{{ asset('storage/' . $item->image) }}" alt="Thrift Image" width="70" height="70" style="object-fit: cover;">
+                                                                <img src="{{ asset('storage/' . $item->image) }}" alt="Thrift Image" width="70" height="70" style="object-fit: contain;">
                                                             @endif
                                                         </td>
                                                         <td>

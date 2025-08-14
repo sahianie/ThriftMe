@@ -85,7 +85,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="price">Price</label>
-                                    <input type="number" name="price" placeholder="Price" class="form-control" id="price" required min="1">
+                                    <input type="number" name="price" placeholder="Price" class="form-control" id="price" required min="100">
                                     <span class="text-danger">@error('price') {{ $message }} @enderror</span>
                                 </div>
                             </div>

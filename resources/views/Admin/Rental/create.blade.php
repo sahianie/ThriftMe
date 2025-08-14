@@ -119,7 +119,7 @@
                                 <div class="form-group">
                                     <label for="rent_per_day">Rent</label>
                                     <input type="number" name="rent_per_day" placeholder="Rent per day"
-                                        class="form-control" id="rent_per_day" required min="1">
+                                        class="form-control" id="rent_per_day" required min="100">
                                     <span class="text-danger">
                                         @error('rent_per_day')
                                             {{ $message }}

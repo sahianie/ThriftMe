@@ -30,8 +30,8 @@ class ThriftPostController extends Controller
             'material' => ['required', 'string','min:3', 'max:50', 'regex:/^[A-Za-z\s]+$/'],
             'condition' => 'required|string|max:255',
             'type' => 'required|in:men,women,kid',
-            'price' => ['required', 'regex:/^\d+$/', 'min:1', 'max:200,000'],
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'price' => ['required', 'numeric', 'regex:/^\d+(\.\d{1,2})?$/', 'min:100', 'max:200000'],
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|',
         ]);
 
         if ($request->hasFile('image')) {
@@ -66,9 +66,11 @@ class ThriftPostController extends Controller
         return view('Admin.Thrift.edit', compact(['data', 'categories']));
     }
 
-    public function update(Request $request, $id)
+   public function update(Request $request, $id)
 {
-    // dd($request->all());
+    $thrift = Thrift::findOrFail($id);
+
+    // 🔹 Basic validation
     $request->validate([
         'category_id' => 'required|exists:categories,id',
         'title' => ['required', 'string', 'min:3', 'max:50', 'regex:/^[A-Za-z\s]+$/'],
@@ -76,22 +78,22 @@ class ThriftPostController extends Controller
         'material' => ['required', 'string', 'min:3', 'max:50', 'regex:/^[A-Za-z\s]+$/'],
         'condition' => 'required|string|max:255',
         'type' => 'required|in:men,women,kid',
-        'price' => ['required', 'regex:/^\d+$/', 'min:1', 'max:200,000'],
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'price' => ['required', 'numeric', 'regex:/^\d+(\.\d{1,2})?$/', 'min:100', 'max:200000'],
+        'image' => ['nullable','image','mimes:jpeg,png,jpg,gif'],
     ]);
 
-    // 🔄 Thrift post ko find karo
-    $thrift = Thrift::findOrFail($id);
-    // dd($thrift);
-    // 🖼️ Nayi image milay to update karo
-    if ($request->hasFile('image')) {
-        // optional: purani image delete karni ho to yahan kar sakte ho
-        $imagePath = $request->file('image')->store('thrifts', 'public');
-    } else {
-        $imagePath = $thrift->image; // purani image rakho
+    // 🔹 Custom check: agar purani image null ho aur user ne new image upload nahi ki
+    if (!$request->hasFile('image') && !$thrift->image) {
+        return back()->withErrors(['image' => 'Image field is required.'])->withInput();
     }
 
-    // 🔧 Update fields
+    // 🔹 Update image
+    $imagePath = $thrift->image; // default purani image
+    if ($request->hasFile('image')) {
+        $imagePath = $request->file('image')->store('thrifts', 'public');
+    }
+
+    // 🔹 Update other fields
     $thrift->update([
         'category_id' => $request->category_id,
         'title' => $request->title,
@@ -103,9 +105,9 @@ class ThriftPostController extends Controller
         'image' => $imagePath,
     ]);
 
-    // ✅ Redirect with success message
     return redirect()->route('index.thrift')->with('success', 'Thrift Post is Updated Successfully');
 }
+
 
 
     

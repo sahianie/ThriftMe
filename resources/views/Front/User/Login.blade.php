@@ -67,7 +67,7 @@
                         @csrf
                         <div class="mb-3">
                             <label for="email" class="form-label">
-                                <b style="color: #000000;">Enter Email</b>
+                                <b style="color: #e0ddddff;">Enter Email</b>
                             </label>
 
                             <input type="text" class="form-control" id="email" name="email" value="{{ old('email') }}" />
@@ -79,7 +79,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">
-                                <b style="color: #000000;">Enter Password</b>
+                                <b style="color: #e0ddddff">Enter Password</b>
                             </label>
 
                             <input type="password" class="form-control" id="password" name="password" />

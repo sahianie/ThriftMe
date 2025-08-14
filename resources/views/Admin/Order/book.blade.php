@@ -27,13 +27,13 @@
                                     <table class="table table-bordered " id="category_table">
                                         <thead>
                                             <tr>
-                                                <th>user_id </th>
-                                                <th>rental_id </th>
-                                                <th>address </th>
-                                                <th>start_date </th>
-                                                <th>end_date </th>
-                                                <th>amount </th>
-                                                <th>contact </th>
+                                                <th>User_id </th>
+                                                <th>Rental_id </th>
+                                                <th>Name</th>
+                                                <th>Start_Date </th>
+                                                <th>End_Date </th>
+                                                <th>Amount </th>
+                                                <th>Contact </th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -42,7 +42,7 @@
                                             <tr>
                                                 <td>{{ $order->user_id }}</td>
                                                 <td>{{ $order->rental_id }}</td>
-                                                <td>{{ $order->address }}</td>
+                                                <td>{{ $order->username }}</td>
                                                 <td>{{ $order->start_date }}</td>
                                                 <td>{{ $order->end_date }}</td>
                                                 <td>{{ $order->total_amount }}</td>

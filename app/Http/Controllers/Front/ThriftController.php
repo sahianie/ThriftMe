@@ -15,14 +15,20 @@ class ThriftController extends Controller
     public function index()
     {
         $categories = Category::where('category_type', 'thrifted')->get();
-        $products = Thrift::all();
+
+        // 🔹 Latest thrift posts first
+        $products = Thrift::latest()->get();
+
         return view('Front.Content.Thrifted.ThriftPost', compact('categories', 'products'));
     }
 
     public function FilterByCategory($category_id)
     {
         $categories = Category::where('category_type', 'thrift')->get();
-        $products = Thrift::where('category_id', $category_id)->get();
+
+        // 🔹 Latest thrift posts first for selected category
+        $products = Thrift::where('category_id', $category_id)->latest()->get();
+
         return view('Front.Content.Thrifted.ThriftByCategory', compact('categories', 'products'));
     }
 
@@ -54,13 +60,22 @@ class ThriftController extends Controller
 
     public function storeThriftOrder(Request $request)
     {
-        // ✅ Validate fields
         $validatedData = $request->validate([
-            'username' => 'required|string|regex:/^[a-zA-Z\s]+$/|min:3|max:50',
-            'address'  => 'required|string|min:10|max:255',
-            'contact' => 'required|string|regex:/^\+?[0-9\s\-]+$/|min:7|max:20',
-
-        ]);
+    'username' => 'required|string|regex:/^[a-zA-Z\s]+$/|min:3|max:50',
+    'address'  => 'required|string|min:10|max:255',
+    'contact' => [
+        'required',
+        'string',
+        'min:11',
+        'max:14',
+        'regex:/^(\+92|0)[1-9][0-9]{7,10}$/'
+    ]
+], [
+    'username.regex' => 'Username should only contain letters and spaces',
+    'contact.min'   => 'Phone number too short (min 11 digits)',
+    'contact.max'   => 'Phone number too long (max 14 digits)',
+    'contact.regex' => 'Invalid Pakistani number format. Must start with +92 or 0',
+]);
 
         $thrift = Thrift::find($request->thrift_id);
 

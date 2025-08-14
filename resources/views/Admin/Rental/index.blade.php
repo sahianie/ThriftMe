@@ -52,7 +52,7 @@
                                                 <td>{{ $rent->rent_per_day }}</td>
                                                 <td>
                                                     @if($rent->image)
-                                                    <img src="{{ asset('storage/' . $rent->image) }}" alt="Rental Image" width="70" height="70" style="object-fit: cover;">
+                                                    <img src="{{ asset('storage/' . $rent->image) }}" alt="Rental Image" width="70" height="70" style="object-fit: contain;">
 
                                                     @else
                                                     @endif

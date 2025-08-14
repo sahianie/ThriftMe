@@ -100,7 +100,7 @@
     <div class="col-md-6">
         <div class="form-group">
             <label for="rent_per_day">Rent</label>
-            <input type="number" name="rent_per_day" class="form-control" id="rent_per_day" required min="1"
+            <input type="number" name="rent_per_day" class="form-control" id="rent_per_day" required min="100"
                 value="{{ old('rent_per_day', $data->rent_per_day ?? '') }}">
             <span class="text-danger">
                 @error('rent_per_day') {{ $message }} @enderror
@@ -113,6 +113,7 @@
         <div class="form-group">
             <label for="image">Image</label>
             <input type="file" name="image" class="form-control" id="image">
+
             <span class="text-danger">
                 @error('image') {{ $message }} @enderror
             </span>
@@ -120,12 +121,14 @@
             <!-- Show existing image if available -->
             @if (!empty($data->image))
                 <div class="mt-2">
-                    <img style="height:70px;width:70px;border-radius:100%" src="{{ asset('storage/' . $data->image) }}" width="100px">
+                    <img id="previewImage" style="height:70px;width:70px;border-radius:100%" 
+                        src="{{ asset('storage/' . $data->image) }}">
                 </div>
             @endif
         </div>
     </div>
 </div>
+
 <br>
 <!-- Submit Button -->
 <div class="mb-3 text-center">
@@ -133,3 +136,13 @@
         <b> {{ !empty($data) ? 'Update Rental' : 'Add Rental' }} </b>
     </button>
 </div>
+
+<!-- Optional JS to show preview of new uploaded image -->
+<script>
+    document.getElementById('image').addEventListener('change', function(event){
+        const [file] = this.files;
+        if(file){
+            document.getElementById('previewImage').src = URL.createObjectURL(file);
+        }
+    });
+</script>
