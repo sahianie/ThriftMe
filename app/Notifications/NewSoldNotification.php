@@ -24,7 +24,7 @@ class NewSoldNotification extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'message' => 'New thrift item sold by ' . $this->sold->username,
+            'message' => 'Thrift item sold by ' . $this->sold->username,
             'sold_id' => $this->sold->id,
             'thrift_id' => $this->sold->thrift_id,
             'user_id' => $this->sold->user_id,

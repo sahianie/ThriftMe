@@ -17,75 +17,84 @@ class FavouriteController extends Controller
         if (!Auth::check()) {
             return redirect()->route('login')->with('error', 'You need to log in to add to favourites.');
         }
-    
-        // If user is authenticated, add to favourites
-       /** @var \App\Models\User $user */
-$user = Auth::user();
 
-if ($user) {
-    $user->rentalFavourites()->syncWithoutDetaching([$rental->id]);
-}
+        // If user is authenticated, add to favourites
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        if ($user) {
+            $user->rentalFavourites()->syncWithoutDetaching([$rental->id]);
+        }
 
         return back()->with('success', 'Added to favourites!');
     }
 
     public function removeRental(Rental $rental)
     {
-       /** @var \App\Models\User $user */
-$user = Auth::user();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
 
-if ($user) {
-    $user->rentalFavourites()->detach($rental->id);
-}
+        if ($user) {
+            $user->rentalFavourites()->detach($rental->id);
+        }
 
         return back()->with('success', 'Removed from favourites!');
     }
 
     public function addThrift(Thrift $thrift)
     {
-       /** @var \App\Models\User $user */
-$user = Auth::user();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
 
-if ($user) {
-    $user->thriftFavourites()->syncWithoutDetaching([$thrift->id]);
-}
+        if ($user) {
+            $user->thriftFavourites()->syncWithoutDetaching([$thrift->id]);
+        }
 
         return back()->with('success', 'Added to favourites!');
     }
 
     public function removeThrift(Thrift $thrift)
     {
-      /** @var \App\Models\User $user */
-$user = Auth::user();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
 
-if ($user) {
-    $user->thriftFavourites()->detach($thrift->id);
-}
+        if ($user) {
+            $user->thriftFavourites()->detach($thrift->id);
+        }
 
         return back()->with('success', 'Removed from favourites!');
     }
 
     public function index()
-    {
-       /** @var \App\Models\User $user */
-$user = Auth::user();
+{
+    /** @var \App\Models\User $user */
+    $user = Auth::user();
 
-if ($user) {
-    $rentalFavourites = $user->rentalFavourites()->latest()->get();
-} else {
-    $rentalFavourites = collect(); // empty collection if no user logged in
-}
+    if (!$user) {
+        $favourites = collect(); // agar user login nahi
+    } else {
+        // Rental favourites fetch karo
+        $rentalFavourites = $user->rentalFavourites()->get()->map(function($item) {
+            $item->favourited_at = $item->pivot->created_at;
+            $item->type = 'rental';
+            return $item;
+        });
 
-       /** @var \App\Models\User $user */
-$user = Auth::user();
+        // Thrift favourites fetch karo
+        $thriftFavourites = $user->thriftFavourites()->get()->map(function($item) {
+            $item->favourited_at = $item->pivot->created_at;
+            $item->type = 'thrift';
+            return $item;
+        });
 
-if ($user) {
-    $thriftFavourites = $user->thriftFavourites()->latest()->get();
-} else {
-    $thriftFavourites = collect(); // empty collection if no user logged in
-}
-
-
-        return view('Front.Content.Favourite', compact('rentalFavourites', 'thriftFavourites'));
+        // Dono merge karke latest favourite upar show karo
+        $favourites = $rentalFavourites->merge($thriftFavourites)
+                                       ->sortByDesc('favourited_at')
+                                       ->values();
     }
+
+    return view('Front.Content.Favourite', compact('favourites'));
+}
+
+
 }

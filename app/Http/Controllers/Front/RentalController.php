@@ -82,22 +82,19 @@ class RentalController extends Controller
         $validatedData = $request->validate([
             'rental_id'   => 'required|exists:rentals,id',
             'username' => 'required|string|regex:/^[a-zA-Z\s]+$/|min:3|max:50',
-            'address'  => 'required|string|min:10|max:255',
+            'address'  => 'required|string|min:15|max:255',
             'start_date'  => 'required|date',
             'end_date'    => 'required|date|after_or_equal:start_date',
             'total_days'  => 'required|integer|min:1',
-            'contact' => [
+            'contact'     => [
                 'required',
-                'string',
-                'min:11',
-                'max:14',
-                'regex:/^(\+92|0)[1-9][0-9]{7,10}$/'
+                'regex:/^0\d{9,10}$/',
             ]
         ], [
             'username.regex' => 'Username should only contain letters and spaces',
-            'contact.min'   => 'Phone number too short (min 11 digits)',
-            'contact.max'   => 'Phone number too long (max 14 digits)',
-            'contact.regex' => 'Invalid Pakistani number format. Must start with +92 or 0',
+            'address.min' =>   'Please enter a proper authentic address.',
+            'address.max' =>   'Your address is too long. Please keep it under 255 characters.',
+            'contact.regex'    => 'Invalid contact format.',
         ]);
 
         // 🏠 Step 2: Fetch the rental

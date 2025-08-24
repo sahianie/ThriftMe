@@ -27,7 +27,12 @@ class OrderController extends Controller
 
     public function notification()
     {
-        $notifications = auth()->user()->notifications;
+        /** @var \App\Models\User $user */
+        $user = auth()->user();
+
+        // Fetch notifications with latest first
+        $notifications = $user->notifications()->orderBy('created_at', 'desc')->get();
+
         return view('Admin.Order.notification', compact('notifications'));
     }
 
@@ -45,6 +50,7 @@ class OrderController extends Controller
         }
         return back();
     }
+
     public function rentaldestroy($id)
     {
         $order = Book::findOrFail($id);

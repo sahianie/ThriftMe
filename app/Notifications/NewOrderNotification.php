@@ -26,7 +26,7 @@ class NewOrderNotification extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'message'    => 'New rental order placed by ' . $this->booking->username,
+            'message'    => 'Rental order placed by ' . $this->booking->username,
             'booking_id' => $this->booking->id,
             'user_id'    => $this->booking->user_id,
             'rental_id'  => $this->booking->rental_id,

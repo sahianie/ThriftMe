@@ -34,7 +34,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <input type="text" name="address" class="form-control" placeholder="Address"
+                        <input type="text" name="address" class="form-control" placeholder="Type your complete authentic address here"
                             value="{{ old('address') }}">
                         @error('address')
                             <small class="text-danger">{{ $message }}</small>

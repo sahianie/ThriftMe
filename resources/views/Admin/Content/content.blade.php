@@ -10,7 +10,7 @@
 
             <div class="col-md-6 mb-4">
                 <div class="card graph">
-                    <div class="card-header" style="background-color: #ff99b6; color: white;"><b>Rental Orders</b></div>
+                    <div class="card-header" style="background-color: #ff99b6; color: white;"><b>Rental Products</b></div>
                     <div class="card-body">
                         <canvas id="rentalChart"></canvas>
                     </div>
@@ -19,7 +19,7 @@
 
             <div class="col-md-6 mb-4">
                 <div class="card graph">
-                    <div class="card-header" style="background-color: #ff99b6; color: white;"><b>Thrift Orders</b></div>
+                    <div class="card-header" style="background-color: #ff99b6; color: white;"><b>Thrift Products</b></div>
                     <div class="card-body">
                         <canvas id="thriftChart"></canvas>
                     </div>

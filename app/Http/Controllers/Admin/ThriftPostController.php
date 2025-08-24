@@ -22,37 +22,39 @@ class ThriftPostController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'category_id' => 'required|exists:categories,id',
-            'title' => ['required', 'string', 'min:3', 'max:50', 'regex:/^[A-Za-z\s]+$/'],
-            'size' => 'required|in:small,medium,large',
-            'material' => ['required', 'string','min:3', 'max:50', 'regex:/^[A-Za-z\s]+$/'],
-            'condition' => 'required|string|max:255',
-            'type' => 'required|in:men,women,kid',
-            'price' => ['required', 'numeric', 'regex:/^\d+(\.\d{1,2})?$/', 'min:100', 'max:200000'],
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|',
-        ]);
+{
+    $request->validate([
+        'category_id' => 'required|exists:categories,id',
+        'title' => ['required', 'string', 'min:3', 'max:50', 'regex:/^[A-Za-z\s]+$/'],
+        'size' => 'required|in:small,medium,large',
+        'material' => ['required', 'string', 'min:3', 'max:50', 'regex:/^[A-Za-z\s]+$/'],
+        'condition' => 'required|string|max:255',
+        'type' => 'required|in:men,women,kid',
+        'price' => ['required', 'numeric', 'regex:/^\d+(\.\d{1,2})?$/', 'min:100', 'max:200000'],
+        'image' => 'required|image|mimes:jpeg,png,jpg,gif',
+    ]);
 
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('thrifts', 'public');
-        } else {
-            $imagePath = null;
-        }
+    // ✅ Image Upload Handling
+    $imagePath = $request->hasFile('image') 
+        ? $request->file('image')->store('thrifts', 'public') 
+        : null;
 
-        Thrift::create([
-            'category_id' => $request->category_id,
-            'title' => $request->title,
-            'size' => $request->size,
-            'material' => $request->material,
-            'condition' => $request->condition,
-            'type' => $request->type,
-            'price' => $request->price,
-            'image' => $imagePath,
-        ]);
+    Thrift::create([
+        'category_id' => $request->category_id,
+        'title' => $request->title,
+        'size' => $request->size,
+        'material' => $request->material,
+        'condition' => $request->condition,
+        'type' => $request->type,
+        'price' => $request->price,
+        'image' => $imagePath,
+    ]);
 
-        return redirect()->route('index.thrift')->with('success', 'Thrift Post Created Successfully');
-    }
+    // ✅ Redirect with Success Message
+    return redirect()
+        ->route('index.thrift')
+        ->with('success', 'Thrift Post Created Successfully');
+}
 
     public function show(string $id)
     {
