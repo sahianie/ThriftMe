@@ -1,6 +1,5 @@
 @extends('Front.Master.master')
 @section('content')
-    <!-- Product section -->
     <section class="product-section spad">
         <div class="container">
             <ul class="product-filter controls">
@@ -21,7 +20,7 @@
                                 <img style="height:200px; width:auto;" src="{{ asset('storage/' . $product->image) }}"
                                     alt="{{ $product->title }}">
                                 <div class="pi-meta d-flex justify-content-between align-items-center px-3"
-                                    style="height: 50px;"> <!-- Reduced height -->
+                                    style="height: 50px;">
                                     <div class="pi-m-left d-flex align-items-center">
                                         <a href="{{ route('thrift.detail', $product->id) }}"
                                             style="text-decoration: none; color: inherit;">
@@ -70,5 +69,4 @@
             </div>
         </div>
     </section>
-    <!-- Product section end -->
 @endsection

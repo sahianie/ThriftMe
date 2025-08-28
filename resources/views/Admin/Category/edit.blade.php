@@ -3,9 +3,7 @@
     <div class="container cardContainer">
         <div class="card  categoryCard">
             <div class="card-header mt-3">
-                
                 <div class="card-body">
-                    {{-- {{dd($data)}} --}}
                     <form action="{{ route('update.category',$data->id) }}" enctype="multipart/form-data" method="post">
                         @csrf
                         @include('Admin.Category.fields')

@@ -1,6 +1,5 @@
 @extends('Front.Master.master')
 @section('content')
-    <!-- Product section -->
     <section class="product-section spad">
         <div class="container">
             <ul class="product-filter controls">
@@ -15,14 +14,13 @@
 
             <div class="row" id="product-filter">
                 @foreach ($products as $product)
-                    <div class="mix col-lg-4 col-md-6 mb-4"> {{-- col-lg-4 → 3 cards in 1 row --}}
+                    <div class="mix col-lg-4 col-md-6 mb-4">
                         <div class="product-item">
                             <figure>
-                                <img style="height:200px; width:auto;" 
-                                    src="{{ asset('storage/' . $product->image) }}" 
+                                <img style="height:200px; width:auto;" src="{{ asset('storage/' . $product->image) }}"
                                     alt="{{ $product->title }}">
                                 <div class="pi-meta d-flex justify-content-between align-items-center px-3"
-                                    style="height: 50px;"> <!-- Adjusted height -->
+                                    style="height: 50px;">
                                     <div class="pi-m-left d-flex align-items-center">
                                         <a href="{{ route('rental.detail', $product->id) }}"
                                             style="text-decoration: none; color: inherit;">
@@ -70,5 +68,4 @@
             </div>
         </div>
     </section>
-    <!-- Product section end -->
 @endsection

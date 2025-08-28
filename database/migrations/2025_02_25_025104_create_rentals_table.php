@@ -6,9 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+
     public function up(): void
     {
         Schema::create('rentals', function (Blueprint $table) {
@@ -19,16 +17,13 @@ return new class extends Migration
             $table->string('material')->nullable();
             $table->string('condition')->nullable();
             $table->enum('type', ['men', 'women', 'kid'])->nullable();
-            $table->decimal('rent_per_day',6,2)->nullable();
+            $table->decimal('rent_per_day', 6, 2)->nullable();
             $table->enum('status', ['Available', 'Booked'])->default('Available');
             $table->text('image')->nullable();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('rentals');

@@ -1,17 +1,21 @@
 <div class="form-group mb-3">
     <b>{!! Form::label('categoryName', 'Category Name', ['class' => 'form-label']) !!}</b>
     &nbsp;
-    {{-- <b><small>** Clothes , Shoes , Bags **</small></b> --}}
 
-    {!! Form::select('category_name', [
-        'Clothes' => 'Clothes',
-        'Shoes' => 'Shoes',
-        'Bags' => 'Bags'
-    ], !empty($data->category_name) ? $data->category_name : null, [
-        'class' => 'form-control',
-        'id' => 'categoryName',
-        'placeholder' => 'Select Category Name'
-    ]) !!}
+    {!! Form::select(
+        'category_name',
+        [
+            'Clothes' => 'Clothes',
+            'Shoes' => 'Shoes',
+            'Bags' => 'Bags',
+        ],
+        !empty($data->category_name) ? $data->category_name : null,
+        [
+            'class' => 'form-control',
+            'id' => 'categoryName',
+            'placeholder' => 'Select Category Name',
+        ],
+    ) !!}
 
     <span class="text-danger">
         @error('category_name')
@@ -23,16 +27,20 @@
 <div class="form-group mb-3">
     <b>{!! Form::label('categoryType', 'Category Type', ['class' => 'form-label']) !!}</b>
     &nbsp;
-    {{-- <b><small>** Rental, Thrifted **</small></b> --}}
 
-    {!! Form::select('category_type', [
-        'Rental' => 'Rental',
-        'Thrifted' => 'Thrifted'
-    ], !empty($data->category_type) ? $data->category_type : null, [
-        'class' => 'form-control',
-        'id' => 'categoryType',
-        'placeholder' => 'Select Category Type'
-    ]) !!}
+    {!! Form::select(
+        'category_type',
+        [
+            'Rental' => 'Rental',
+            'Thrifted' => 'Thrifted',
+        ],
+        !empty($data->category_type) ? $data->category_type : null,
+        [
+            'class' => 'form-control',
+            'id' => 'categoryType',
+            'placeholder' => 'Select Category Type',
+        ],
+    ) !!}
 
     <span class="text-danger">
         @error('category_type')

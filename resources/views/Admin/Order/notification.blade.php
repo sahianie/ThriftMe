@@ -22,7 +22,7 @@
                 @endif
             </li>
         @empty
-            <li>No notifications yet.</li>
+            <li>No Notifications yet.</li>
         @endforelse
     </ul>
 @endsection

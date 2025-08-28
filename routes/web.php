@@ -14,8 +14,6 @@ use App\Http\Controllers\Admin\ThriftPostController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Front\LoginController;
 
-
-
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 ///////////////////  Feedback  ///////////////
@@ -27,7 +25,6 @@ Route::post('/feedbackStore', [FeedbackController::class, 'store'])->name('feedb
 
 Route::get('/thrift', [ThriftController::class, 'index'])->name('thrift');
 Route::get('/rental', [RentalController::class, 'index'])->name('rental');
-
 
 ///////////////////  ViewRentalPosts  ///////////////
 
@@ -64,7 +61,6 @@ Route::get('/thrift-orders', [OrderController::class, 'thriftOrders'])->name('th
 Route::delete('/rental-orders/{id}', [OrderController::class, 'rentaldestroy'])->name('rental-orders.destroy');
 Route::delete('/sold/{id}', [OrderController::class, 'thriftdestroy'])->name('sold.destroy');
 
-
 ///////////////////  Category  ///////////////
 
 Route::get('/indexCategory',[CategoryController::class,'index'])->name('index.category');
@@ -82,7 +78,6 @@ Route::post('/storeRental',[RentalPostController::class,'store'])->name('store.r
 Route::get('/editRental/{id}',[RentalPostController::class,'edit'])->name('edit.rental');
 Route::post('/updateRental/{id}',[RentalPostController::class,'update'])->name('update.rental');
 Route::any('/deleteRental/{id}',[RentalPostController::class,'destroy'])->name('delete.rental');
-
 
 ///////////////////  Thrift  ///////////////
 

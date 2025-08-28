@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-use App\Models\Book;
+
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -23,16 +23,12 @@ class Rental extends Model
         'image',
     ];
     public function category()
-   {
-    return  $this->belongsTo(Category::class);
-   }
-   public function book()
     {
-        return $this->hasMany(Book::class);
+        return  $this->belongsTo(Category::class);
     }
-    public function favouritedBy()
-{
-    return $this->morphToMany(User::class, 'favouritable', 'favourites')->withTimestamps();
-}
 
+    public function favouritedBy()
+    {
+        return $this->morphToMany(User::class, 'favouritable', 'favourites')->withTimestamps();
+    }
 }

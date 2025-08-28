@@ -7,7 +7,7 @@
                     <div class="sb-nav-link-icon sidecontent"><i class="fas fa-tachometer-alt"></i></div>
                     <b class="sidecontent"> Dashboard</b>
                 </a>
-                
+
                 <a class="nav-link " href="{{ route('index.category') }}">
                     <div class="sb-nav-link-icon sidecontent"><i class="fas fa-tachometer-alt"></i></div>
                     <b class="sidecontent"> Category </b>
@@ -32,7 +32,7 @@
                     <div class="sb-nav-link-icon sidecontent"><i class="fas fa-tachometer-alt"></i></div>
                     <b class="sidecontent"> Booking </b>
                 </a>
-                
+
                 <a class="nav-link " href="{{ route('thrift.orders') }}">
                     <div class="sb-nav-link-icon sidecontent"><i class="fas fa-tachometer-alt"></i></div>
                     <b class="sidecontent"> Selling </b>

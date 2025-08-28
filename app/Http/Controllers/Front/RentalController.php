@@ -22,13 +22,11 @@ class RentalController extends Controller
             $user = Auth::user();
             if ($user) {
                 $user = Auth::user();
-                $rentalFavourites = $user->rentalFavourites; // load kar diya
-
+                $rentalFavourites = $user->rentalFavourites; 
             }
         }
 
-        // 🔹 Latest rentals first
-        $products = Rental::latest()->get(); // equivalent to orderBy('created_at', 'desc')
+        $products = Rental::latest()->get(); 
 
         return view('Front.Content.Rental.RentalPosts', compact('categories', 'products'));
     }
@@ -37,7 +35,6 @@ class RentalController extends Controller
     {
         $categories = Category::where('category_type', 'rental')->get();
 
-        // 🔹 Latest rentals first for selected category
         $products = Rental::where('category_id', $category_id)->latest()->get();
 
         return view('Front.Content.Rental.RentalByCategory', compact('categories', 'products'));
@@ -45,40 +42,34 @@ class RentalController extends Controller
 
     public function Rentaldetail($rental_id)
     {
-        // Fetch rental post by ID
+
         $rental = Rental::find($rental_id);
 
-        // Check if rental exists
         if (!$rental) {
             return redirect()->back()->with('error', 'Rental not found.');
         }
 
-        // Fetch existing bookings for this rental
         $bookings = Book::where('rental_id', $rental->id)->get(['start_date', 'end_date']);
 
-        // Pass data to the view
         return view('Front.Content.Rental.DetailPage', compact('rental', 'bookings'));
     }
 
 
     public function Rentalorder($rental_id)
     {
-        // Check if user is logged in
+        
         if (!auth()->check()) {
             return redirect()->route('login')->with('error', 'You need to log in to place a rental order.');
         }
 
-        // Fetch rental post by ID
         $rental = Rental::where('id', $rental_id)->first();
         $bookings = Book::where('rental_id', $rental->id)->get(['start_date', 'end_date']);
 
-        // Pass data to the view
         return view('Front.Content.Rental.RentalOrder', compact('rental', 'bookings'));
     }
 
     public function storeRentalOrder(Request $request)
     {
-        // 📋 Step 1: Validate the incoming request
         $validatedData = $request->validate([
             'rental_id'   => 'required|exists:rentals,id',
             'username' => 'required|string|regex:/^[a-zA-Z\s]+$/|min:3|max:50',
@@ -97,13 +88,11 @@ class RentalController extends Controller
             'contact.regex'    => 'Invalid contact format.',
         ]);
 
-        // 🏠 Step 2: Fetch the rental
         $rental = Rental::find($validatedData['rental_id']);
         if (!$rental) {
             return redirect()->back()->with('error', 'Rental item not found.');
         }
 
-        // 🛑 Step 2.5: Check for date overlaps
         $existingBookings = Book::where('rental_id', $rental->id)
             ->get();
 
@@ -118,15 +107,13 @@ class RentalController extends Controller
                 ($newStartDate <= $existingEndDate) &&
                 ($newEndDate >= $existingStartDate)
             ) {
-                // Dates overlap
+                
                 return redirect()->back()->with('error', 'Sorry, selected dates are already booked.')->withInput();
             }
         }
 
-        // 💰 Step 3: Calculate total amount
         $total_amount = $validatedData['total_days'] * $rental->rent_per_day;
 
-        // 🗂️ Step 4: Store booking
         try {
             $booking = Book::create([
                 'user_id'      => auth()->id(),
@@ -140,13 +127,12 @@ class RentalController extends Controller
                 'contact'      => $validatedData['contact'],
             ]);
 
-            // 🔔 Step 5: Notify all admins
             $admins = User::where('role', 'admin')->get();
             foreach ($admins as $admin) {
                 $admin->notify(new NewOrderNotification($booking));
             }
 
-            return redirect()->back()->with('success', 'Your rental order has been placed successfully!');
+            return redirect()->back()->with('success', 'Your Rental Order has been Placed Successfully!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Something went wrong: ' . $e->getMessage());
         }

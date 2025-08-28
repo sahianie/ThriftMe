@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use App\Models\Rental;
 use App\Models\Thrift;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,11 +17,11 @@ class Category extends Model
     ];
     public function rental()
     {
-     return  $this->hasMany(Rental::class);
+        return  $this->hasMany(Rental::class,'category_id');
     }
 
     public function thrift()
     {
-     return  $this->hasMany(Thrift::class);
+        return  $this->hasMany(Thrift::class,'category_id');
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use App\Models\Rental;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -32,5 +33,4 @@ class Book extends Model
     {
         return $this->belongsTo(Rental::class);
     }
-
 }

@@ -15,7 +15,7 @@
         @endif
 
         <div class="row">
-            <!-- Left side: Rental Order Form -->
+
             <div class="col-md-6">
                 <h2 class="mb-4">Billing Address</h2>
 
@@ -34,8 +34,8 @@
                     </div>
 
                     <div class="mb-3">
-                        <input type="text" name="address" class="form-control" placeholder="Type your complete authentic address here"
-                            value="{{ old('address') }}">
+                        <input type="text" name="address" class="form-control"
+                            placeholder="Type your complete authentic address here" value="{{ old('address') }}">
                         @error('address')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
@@ -78,10 +78,9 @@
                         <button type="submit" class="site-btn btn-line">Booked</button>
                     </div>
                 </form>
-                <!-- Form close after both sides -->
             </div>
 
-            <!-- Right side: Your Order -->
+
             <div class="col-md-6">
                 <div class="order-card">
                     <div class="order-details">
@@ -124,7 +123,6 @@
         </div>
     </div>
 
-    <!-- Flatpickr Library -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <script>
@@ -147,8 +145,8 @@
             }),
             onChange: function(selectedDates, dateStr, instance) {
                 if (selectedDates.length > 0) {
-                    endPicker.set("minDate", dateStr); // prevent selecting before start
-                    calculateDays(); // auto-update days
+                    endPicker.set("minDate", dateStr);
+                    calculateDays();
                 }
             }
         });
@@ -164,8 +162,8 @@
             }),
             onChange: function(selectedDates, dateStr, instance) {
                 if (selectedDates.length > 0) {
-                    startPicker.set("maxDate", dateStr); // optional
-                    calculateDays(); // auto-update days
+                    startPicker.set("maxDate", dateStr);
+                    calculateDays();
                 }
             }
         });
@@ -181,7 +179,6 @@
                 let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
                 document.getElementById('days').value = diffDays > 0 ? diffDays : '';
 
-                // Update right side display
                 document.getElementById('displayTotalDays').innerText = diffDays;
 
                 let rentPerDay = {{ $rental->rent_per_day }};

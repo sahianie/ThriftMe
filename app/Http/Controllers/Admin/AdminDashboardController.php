@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Rental;
 use App\Models\Thrift;
 use App\Models\Book;
@@ -20,6 +19,4 @@ class AdminDashboardController extends Controller
 
         return view('Admin.Content.content', compact('totalRentals', 'totalThrifts', 'totalBookOrders', 'totalSoldOrders'));
     }
-
-    
 }

@@ -5,7 +5,6 @@
     <div class="container-fluid px-4">
         <h1 class="mt-4 mb-4 text-center" style="color: #ff99b6;">ThriftMe Dashboard</h1>
 
-        {{-- Charts --}}
         <div class="row mt-3 justify-content-center">
 
             <div class="col-md-6 mb-4">
@@ -28,7 +27,7 @@
 
         </div>
 
-        {{-- Info Panels --}}
+       
         <div class="row mb-4 justify-content-center">
 
             <div class="col-md-3">
@@ -87,7 +86,7 @@
 
 @section('script')
 
-{{-- Chart.js --}}
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>

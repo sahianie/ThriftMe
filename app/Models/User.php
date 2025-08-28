@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Book;
 use App\Models\Thrift;
 use App\Models\Rental;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -30,10 +29,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function book()
-    {
-        return $this->hasMany(Book::class);
-    }
 
     public function rentalFavourites()
     {
@@ -45,10 +40,6 @@ class User extends Authenticatable
         return $this->morphedByMany(Thrift::class, 'favouritable', 'favourites')->withTimestamps();
     }
 
-    /**
-     * Dummy method for IDE (Intelephense) support.
-     * Laravel provides this dynamically via Notifiable trait.
-     */
     public function notifications()
     {
         return $this->morphMany(\Illuminate\Notifications\DatabaseNotification::class, 'notifiable')->latest();

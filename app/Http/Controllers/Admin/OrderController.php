@@ -6,21 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Models\Book;
 use App\Models\Sold;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    // Rental orders (Book model)
+
     public function rentalOrders()
     {
-        $orders = Book::all(); // Sab rental orders
+        $orders = Book::all();
         return view('Admin.Order.book', compact('orders'));
     }
 
-    // Thrift orders (Sold model)
     public function thriftOrders()
     {
-        $soldItems = Sold::all(); // Sab thrift orders
+        $soldItems = Sold::all();
         return view('Admin.Order.sold', compact('soldItems'));
     }
 
@@ -30,9 +28,7 @@ class OrderController extends Controller
         /** @var \App\Models\User $user */
         $user = auth()->user();
 
-        // Fetch notifications with latest first
         $notifications = $user->notifications()->orderBy('created_at', 'desc')->get();
-
         return view('Admin.Order.notification', compact('notifications'));
     }
 
@@ -55,7 +51,6 @@ class OrderController extends Controller
     {
         $order = Book::findOrFail($id);
 
-        // Delete related notification
         DB::table('notifications')
             ->where('data->booking_id', $order->id)
             ->delete();
@@ -69,13 +64,12 @@ class OrderController extends Controller
     {
         $sold = Sold::findOrFail($id);
 
-        // Delete related notification
         DB::table('notifications')
             ->where('data->sold_id', $sold->id)
             ->delete();
 
         $sold->delete();
 
-        return redirect()->back()->with('success', 'Sold item deleted successfully!');
+        return redirect()->back()->with('success', 'Order deleted successfully!');
     }
 }

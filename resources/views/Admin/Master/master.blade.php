@@ -8,96 +8,92 @@
     @include('Admin.Partial.Style')
     @yield('style')
     <style>
-
-        #layoutSidenav_nav
-        {
+        #layoutSidenav_nav {
             background: linear-gradient(to bottom, #ff99b6, #af99ff);
 
         }
-        .header
-        {
-            background-color:#ff99b6;
-        }
-        .footer
-        {
-            background-color:#af99ff;
-        }
-        .navbar-brand
-        {
-            color:black ;
 
+        .header {
+            background-color: #ff99b6;
         }
-        .navbar-brand:hover
-        {
+
+        .footer {
+            background-color: #af99ff;
+        }
+
+        .navbar-brand {
             color: black;
 
         }
-        .fa-bars
-        {
-           color: black;
+
+        .navbar-brand:hover {
+            color: black;
+
         }
 
-        .sidecontent
-        {
+        .fa-bars {
             color: black;
         }
-        .sidecontent:hover
-        {
-            color:black;
+
+        .sidecontent {
+            color: black;
         }
-        .profile
-        {
+
+        .sidecontent:hover {
+            color: black;
+        }
+
+        .profile {
             color: #af99ff;
         }
-        .profile:hover
-        {
+
+        .profile:hover {
             background-color: #ff99b6;
             color: #af99ff;
         }
-        .categoryBtn
-        {
-            background-color:#ff99b6;
+
+        .categoryBtn {
+            background-color: #ff99b6;
             color: #af99ff;
             border-radius: 5px;
         }
-        .categoryBtn:hover
-        {
-            background-color:#ff99b6;
+
+        .categoryBtn:hover {
+            background-color: #ff99b6;
             color: black;
         }
-        .submitCategory
-        {
-            background-color: #af99ff;
-            color:black;
-        }
-        .submitCategory:hover
-        {
+
+        .submitCategory {
             background-color: #af99ff;
             color: black;
         }
-        .categoryCard
-        {
+
+        .submitCategory:hover {
+            background-color: #af99ff;
+            color: black;
+        }
+
+        .categoryCard {
             background-color: #ff99b6;
             width: 70%;
 
         }
 
-        .cardContainer
-        {
+        .cardContainer {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
         }
-        .productContainer
-        {
+
+        .productContainer {
             display: flex;
             justify-content: center;
             align-items: center;
 
         }
-        .productCard
-        {
+
+        .productCard {
             background-color: #ff99b6;
             width: 70%;
             margin-bottom: 50px;
